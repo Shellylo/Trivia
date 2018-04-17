@@ -18,10 +18,10 @@ public:
 	void bindAndListen();
 
 private:
-	std::map<SOCKET, IRequestHandler&> m_clients;
+	std::map<SOCKET, IRequestHandler*> m_clients;
 	RequestHandlerFactory& m_handleFactory;
 	SOCKET _serverSocket;
 
 	void startThreadForNewClient();
-	void handleRequests(SOCKET socket, IRequestHandler& state);
+	void handleRequests(SOCKET socket, IRequestHandler* state);
 };
