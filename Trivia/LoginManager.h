@@ -12,6 +12,6 @@ public:
 	void logout();
 
 private:
-	IDatabase* m_database;
+	IDatabase& m_database;
 	std::vector<LoggedUser> m_logged_users;
 };

@@ -11,9 +11,11 @@ class Communicator
 {
 public:
 	void bindAndListen();
-	void handleRequests();
 
 private:
 	std::map<SOCKET, IRequestHandler> m_clients;
 	RequestHandlerFactory m_handleFactory;
+
+	void startThreadForNewClient();
+	void handleRequests(SOCKET socket, IRequestHandler ssssstate);
 };
