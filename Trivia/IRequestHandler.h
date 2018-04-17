@@ -3,6 +3,8 @@
 #include <iostream>
 #include <vector>
 
+class IRequestHandler;
+
 struct Request
 {
 	int id;

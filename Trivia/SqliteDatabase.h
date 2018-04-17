@@ -7,7 +7,10 @@
 
 class SqliteDatabase : IDatabase
 {
+public:
+	SqliteDatabase();
+
 	std::map<LoggedUser, int> getHighscores() override;
 	bool doesUserExist(std::string username) override;
-	std::list<Question> getQuestions(int num) override;
+	//std::list<Question> getQuestions(int num) override;
 };
