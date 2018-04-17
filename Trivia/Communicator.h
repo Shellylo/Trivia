@@ -6,16 +6,22 @@
 #include <map>
 #include "IRequestHandler.h"
 #include "RequestHandlerFactory.h"
+#include <utility>
+#include <thread>
 
 class Communicator
 {
 public:
+	Communicator(RequestHandlerFactory& handlerFactory);
+	~Communicator();
+
 	void bindAndListen();
 
 private:
-	std::map<SOCKET, IRequestHandler> m_clients;
-	RequestHandlerFactory m_handleFactory;
+	std::map<SOCKET, IRequestHandler&> m_clients;
+	RequestHandlerFactory& m_handleFactory;
+	SOCKET _serverSocket;
 
 	void startThreadForNewClient();
-	void handleRequests(SOCKET socket, IRequestHandler ssssstate);
+	void handleRequests(SOCKET socket, IRequestHandler& state);
 };

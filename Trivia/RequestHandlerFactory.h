@@ -4,6 +4,8 @@
 class RequestHandlerFactory
 {
 public:
+	RequestHandlerFactory(IDatabase& database);
+
 	LoginRequestHandler createLoginRequestHandler();
 
 private:
