@@ -18,6 +18,6 @@ struct SignupRequest
 class JsonRequestPacketDeserializer
 {
 public:
-	LoginRequest deserializeLoginRequest(std::string req);
-	SignupRequest deserializeSignupRequest(std::string req);
+	LoginRequest deserializeLoginRequest(std::vector<char> req);
+	SignupRequest deserializeSignupRequest(std::vector<char> req);
 };

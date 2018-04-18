@@ -8,12 +8,12 @@ struct Request
 {
 	int reqCode;
 	int dataLength;
-	std::string buffer;
+	std::vector<char> buffer;
 };
 
 struct RequestResult
 {
-	std::string buffer;
+	std::vector<char> buffer;
 	IRequestHandler* newHandler;
 };
 
