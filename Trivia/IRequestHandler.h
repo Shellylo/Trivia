@@ -1,5 +1,4 @@
 #pragma once
-#include <ctime>
 #include <iostream>
 #include <vector>
 
@@ -7,14 +6,14 @@ class IRequestHandler;
 
 struct Request
 {
-	int id;
-	std::time_t receivalTime;
-	std::vector<char> buffer;
+	int reqCode;
+	int dataLength;
+	std::string buffer;
 };
 
 struct RequestResult
 {
-	std::vector<char> buffer;
+	std::string buffer;
 	IRequestHandler* newHandler;
 };
 
