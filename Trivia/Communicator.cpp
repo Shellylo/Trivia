@@ -51,7 +51,7 @@ void Communicator::startThreadForNewClient()
 
 	// the function that handle the conversation with the client
 	m_clients.insert(std::pair<SOCKET, IRequestHandler*>(client_socket, &m_handleFactory.createLoginRequestHandler()));
-	std::thread clientHandler(&Communicator::handleRequests, std::ref(*this), client_socket);
+	std::thread clientHandler(&Communicator::clientHandler, std::ref(*this), client_socket);
 	clientHandler.detach();
 }
 
