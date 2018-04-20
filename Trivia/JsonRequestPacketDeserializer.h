@@ -1,6 +1,9 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include "json.hpp"
+
+using json = nlohmann::json;
 
 struct LoginRequest
 {

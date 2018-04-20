@@ -3,10 +3,15 @@
 #include <vector>
 #include <cmath>
 #include <bitset>
+#include "json.hpp"
 
-#define ERROR 0
+#define ERROR_RESP_CODE 0
+#define LOGIN_RESP_CODE 1
+#define SIGNUP_RESP_CODE 2
 #define SIZE_LEN 4
 #define CHAR_SIZE 8
+
+using json = nlohmann::json;
 
 struct ErrorResponse
 {
