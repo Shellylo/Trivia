@@ -1,5 +1,4 @@
 #pragma once
-
 #include <winsock2.h>
 #include <windows.h>
 #include <iostream>
@@ -16,6 +15,7 @@ public:
 	~Communicator();
 
 	void bindAndListen();
+	void handleRequests();
 
 private:
 	std::map<SOCKET, IRequestHandler*> m_clients;
@@ -23,5 +23,5 @@ private:
 	SOCKET _serverSocket;
 
 	void startThreadForNewClient();
-	void handleRequests(SOCKET socket, IRequestHandler* state);
+	void clientHandler(SOCKET socket);
 };
