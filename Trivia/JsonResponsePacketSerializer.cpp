@@ -41,11 +41,8 @@ std::vector<char> JsonResponsePacketSerializer::intToBinary(unsigned int num)
 	std::vector<char> ret = { '\0', '\0','\0','\0' };
 	for (int i = 0; i < SIZE_LEN && num != 0; i++)
 	{
-		for (int k = 0; k < CHAR_SIZE && num != 0; k++)
-		{
-			ret[SIZE_LEN - 1 - i] += num%2 * pow(2, k);
-			num /= 2;
-		}
+		ret[SIZE_LEN - 1 - i] += num % 256;
+		num /= 256;
 	}
 	return ret;
 }

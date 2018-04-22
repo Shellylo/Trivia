@@ -9,6 +9,8 @@
 #include <utility>
 #include <thread>
 
+#define INFO_LEN 5
+
 class Communicator
 {
 public:

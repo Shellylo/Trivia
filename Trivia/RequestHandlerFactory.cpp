@@ -4,7 +4,7 @@ RequestHandlerFactory::RequestHandlerFactory(IDatabase & database) : m_loginMana
 {
 }
 
-LoginRequestHandler RequestHandlerFactory::createLoginRequestHandler()
+LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler()
 {
-	return LoginRequestHandler(m_loginManager, *this);
+	return new LoginRequestHandler(m_loginManager, *this);
 }

@@ -31,10 +31,10 @@ struct SignupResponse
 class JsonResponsePacketSerializer
 {
 public:
-	std::vector<char> serializeResponse(ErrorResponse resp);
-	std::vector<char> serializeResponse(LoginResponse resp);
-	std::vector<char> serializeResponse(SignupResponse resp);
+	static std::vector<char> serializeResponse(ErrorResponse resp);
+	static std::vector<char> serializeResponse(LoginResponse resp);
+	static std::vector<char> serializeResponse(SignupResponse resp);
 
 private:
-	std::vector<char> intToBinary(unsigned int num);
+	static std::vector<char> intToBinary(unsigned int num);
 };
