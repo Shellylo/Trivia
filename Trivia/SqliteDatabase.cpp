@@ -45,6 +45,13 @@ void SqliteDatabase::addUser(std::string username, std::string pass, std::string
 	sendStatement("INSERT INTO USERS (USERNAME, PASSWORD, EMAIL) VALUES(\"" + username + "\",\"" + pass + "\",\"" + email + "\");");
 }
 
+bool SqliteDatabase::passMatches(std::string username, std::string pass)
+{
+	bool match = false;
+	sendStatement("SELECT * FROM USERS WHERE USERNAME = \"" + username + "\" AND PASSWORD = \"" + pass + "\";", doesExistCallback, &match);
+	return match;
+}
+
 bool SqliteDatabase::initDB()
 {
 	bool ret = true;
