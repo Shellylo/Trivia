@@ -15,7 +15,6 @@ Communicator::~Communicator()
 
 void Communicator::bindAndListen()
 {
-
 	_serverSocket = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
 	if (_serverSocket == INVALID_SOCKET)
