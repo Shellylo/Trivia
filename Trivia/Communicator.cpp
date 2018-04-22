@@ -15,7 +15,6 @@ Communicator::~Communicator()
 
 void Communicator::bindAndListen()
 {
-
 	_serverSocket = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
 	if (_serverSocket == INVALID_SOCKET)
@@ -50,12 +49,32 @@ void Communicator::startThreadForNewClient()
 		throw std::exception(__FUNCTION__);
 
 	// the function that handle the conversation with the client
-	m_clients.insert(std::pair<SOCKET, IRequestHandler*>(client_socket, &m_handleFactory.createLoginRequestHandler()));
+	m_clients.insert(std::pair<SOCKET, IRequestHandler*>(client_socket, m_handleFactory.createLoginRequestHandler()));
 	std::thread clientHandler(&Communicator::clientHandler, std::ref(*this), client_socket);
 	clientHandler.detach();
 }
 
 void Communicator::clientHandler(SOCKET socket)
 {
-	
+	while (true)
+	{
+		std::vector<char> info(INFO_LEN);
+		recv(socket, &info[0], INFO_LEN, 0);
+		int size = JsonRequestPacketDeserializer::binaryToInt(&info[1]);
+		std::vector<char> data(size);
+		recv(socket, &data[0], size, 0);
+		Request req = { info[0], size, data };
+		std::vector<char> ans = JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Irrelevant request" });
+		if (m_clients[socket]->isRequestRelevant(req))
+		{
+			RequestResult resp = m_clients[socket]->handleRequest(req);
+			if (resp.newHandler)
+			{
+				delete m_clients[socket];
+				m_clients[socket] = resp.newHandler;
+			}
+			ans = resp.buffer;
+		}
+		send(socket, &ans[0], ans.size(), 0);
+	}
 }

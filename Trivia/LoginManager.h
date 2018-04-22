@@ -11,9 +11,15 @@ public:
 
 	void signup(std::string name, std::string pass, std::string email);
 	void login(std::string name, std::string pass);
-	void logout();
+	void logout(std::string name); // receive name?
 
 private:
 	IDatabase& m_database;
 	std::vector<LoggedUser> m_logged_users;
+
+	std::vector<LoggedUser>::iterator getUser(std::string name);
+
+	bool isValidName(std::string name) { return true; }
+	bool isValidPass(std::string pass) { return true; }
+	bool isValidEmail(std::string email) { return true; }
 };

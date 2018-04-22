@@ -2,6 +2,11 @@
 #include "IRequestHandler.h"
 #include "LoginManager.h"
 #include "RequestHandlerFactory.h"
+#include "JsonRequestPacketDeserializer.h"
+#include "JsonResponsePacketSerializer.h"
+
+#define LOGIN_REQ_CODE 1
+#define SIGNUP_REQ_CODE 2
 
 class RequestHandlerFactory;
 
@@ -17,6 +22,6 @@ private:
 	LoginManager& m_loginManager;
 	RequestHandlerFactory& m_handlerFactory;
 
-	RequestResult loginRequest(Request req);
-	RequestResult signUp(Request req);
+	RequestResult login(Request req);
+	RequestResult signup(Request req);
 };

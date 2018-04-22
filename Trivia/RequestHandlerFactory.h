@@ -10,7 +10,8 @@ class RequestHandlerFactory
 public:
 	RequestHandlerFactory(IDatabase& database);
 
-	LoginRequestHandler createLoginRequestHandler();
+	LoginRequestHandler* createLoginRequestHandler();
+	IRequestHandler* createMenuRequestHandler() { return nullptr; } // temp - change later the return value
 
 private:
 	LoginManager m_loginManager;

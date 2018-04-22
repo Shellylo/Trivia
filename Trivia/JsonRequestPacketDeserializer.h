@@ -3,6 +3,9 @@
 #include <vector>
 #include "json.hpp"
 
+#define SIZE_LEN 4
+#define CHAR_SIZE 8
+
 using json = nlohmann::json;
 
 struct LoginRequest
@@ -21,6 +24,7 @@ struct SignupRequest
 class JsonRequestPacketDeserializer
 {
 public:
-	LoginRequest deserializeLoginRequest(std::vector<char> req);
-	SignupRequest deserializeSignupRequest(std::vector<char> req);
+	static LoginRequest deserializeLoginRequest(std::vector<char> req);
+	static SignupRequest deserializeSignupRequest(std::vector<char> req);
+	static unsigned int binaryToInt(char* buff);
 };
