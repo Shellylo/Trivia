@@ -22,7 +22,7 @@ public:
 	bool doesUserExist(std::string username) override;
 	void addUser(std::string username, std::string pass, std::string email) override;
 	bool passMatches(std::string username, std::string pass) override { return true; }
-	std::list<Question> getQuestions(int num) override;
+	std::list<Question> getQuestions(int num) override { return std::list<Question>(); };
 private:
 	sqlite3* db;
 
