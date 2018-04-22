@@ -1,12 +1,13 @@
 #pragma once
-#include <ctime>
 #include <iostream>
 #include <vector>
 
+class IRequestHandler;
+
 struct Request
 {
-	int id;
-	std::time_t receivalTime;
+	int reqCode;
+	int dataLength;
 	std::vector<char> buffer;
 };
 
