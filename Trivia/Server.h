@@ -7,6 +7,7 @@ class Server
 {
 public:
 	Server(IDatabase& database);
+	~Server();
 
 	void run();
 

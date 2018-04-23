@@ -9,6 +9,7 @@ Communicator::~Communicator()
 	try
 	{
 		::closesocket(_serverSocket);
+		
 	}
 	catch (...) {}
 }
@@ -41,6 +42,30 @@ void Communicator::bindAndListen()
 	}
 }
 
+void Communicator::handleRequests()
+{
+	while (true)
+	{
+		if (!rq.empty())
+		{
+			std::pair<SOCKET, Request> sock_req = rq.front();
+			rq.pop();
+			std::vector<char> ans = JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Irrelevant request" });
+			if (m_clients[sock_req.first]->isRequestRelevant(sock_req.second))
+			{
+				RequestResult resp = m_clients[sock_req.first]->handleRequest(sock_req.second);
+				if (resp.newHandler)
+				{
+					delete m_clients[sock_req.first];
+					m_clients[sock_req.first] = resp.newHandler;
+				}
+				ans = resp.buffer;
+			}
+			send(sock_req.first, &ans[0], ans.size(), 0);
+		}
+	}
+}
+
 void Communicator::startThreadForNewClient()
 {
 	SOCKET client_socket = ::accept(_serverSocket, NULL, NULL);
@@ -64,17 +89,6 @@ void Communicator::clientHandler(SOCKET socket)
 		std::vector<char> data(size);
 		recv(socket, &data[0], size, 0);
 		Request req = { info[0], size, data };
-		std::vector<char> ans = JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Irrelevant request" });
-		if (m_clients[socket]->isRequestRelevant(req))
-		{
-			RequestResult resp = m_clients[socket]->handleRequest(req);
-			if (resp.newHandler)
-			{
-				delete m_clients[socket];
-				m_clients[socket] = resp.newHandler;
-			}
-			ans = resp.buffer;
-		}
-		send(socket, &ans[0], ans.size(), 0);
+		rq.push(std::pair<SOCKET, Request>(socket, req));
 	}
 }

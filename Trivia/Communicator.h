@@ -8,6 +8,7 @@
 #include "RequestHandlerFactory.h"
 #include <utility>
 #include <thread>
+#include <queue>
 
 #define INFO_LEN 5
 
@@ -24,6 +25,7 @@ private:
 	std::map<SOCKET, IRequestHandler*> m_clients;
 	RequestHandlerFactory& m_handleFactory;
 	SOCKET _serverSocket;
+	std::queue<std::pair<SOCKET, Request>> rq;
 
 	void startThreadForNewClient();
 	void clientHandler(SOCKET socket);

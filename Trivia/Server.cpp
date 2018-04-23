@@ -4,7 +4,15 @@ Server::Server(IDatabase & database) : m_database(database), m_handlerFactory(da
 {
 }
 
+Server::~Server()
+{
+	m_database.close();
+}
+
 void Server::run()
 {
+	m_database.open();
+	std::thread requestsListener(&Communicator::handleRequests, &m_communicator);
+	requestsListener.detach();
 	m_communicator.bindAndListen();
 }
