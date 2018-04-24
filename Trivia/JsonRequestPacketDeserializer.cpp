@@ -2,15 +2,33 @@
 
 LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(std::vector<char> req)
 {
-	json j = json::parse(req.begin(), req.end());
+	json j = json::parse(req);
 	return {j["username"], j["password"]};
 }
 
 SignupRequest JsonRequestPacketDeserializer::deserializeSignupRequest(std::vector<char> req)
 {
 
-	json j = json::parse(req.begin(), req.end());
+	json j = json::parse(req);
 	return { j["username"], j["password"], j["email"] };
+}
+
+GetPlayersInRoomRequest JsonRequestPacketDeserializer::deserializeGetPlayersRequest(std::vector<char> req)
+{
+	json j = json::parse(req);
+	return {j["roomId"]};
+}
+
+JoinRoomRequest JsonRequestPacketDeserializer::deserializeJoinRoomRequest(std::vector<char> req)
+{
+	json j = json::parse(req);
+	return { j["roomId"] };
+}
+
+CreateRoomRequest JsonRequestPacketDeserializer::deserializeCreateRoomRequest(std::vector<char> req)
+{
+	json j = json::parse(req);
+	return { j["name"] , j["maxPlayers"], j["questionCount"], j["answerTimeout"] };
 }
 
 unsigned int JsonRequestPacketDeserializer::binaryToInt(char * buff)

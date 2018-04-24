@@ -21,10 +21,31 @@ struct SignupRequest
 	std::string email;
 };
 
+struct GetPlayersInRoomRequest
+{
+	unsigned int roomId;
+};
+
+struct JoinRoomRequest
+{
+	unsigned int roomId;
+};
+
+struct CreateRoomRequest
+{
+	std::string name;
+	unsigned int maxPlayers;
+	unsigned int questionCount;
+	unsigned int answerTimeout;
+};
+
 class JsonRequestPacketDeserializer
 {
 public:
 	static LoginRequest deserializeLoginRequest(std::vector<char> req);
 	static SignupRequest deserializeSignupRequest(std::vector<char> req);
+	static GetPlayersInRoomRequest deserializeGetPlayersRequest(std::vector<char> req);
+	static JoinRoomRequest deserializeJoinRoomRequest(std::vector<char> req);
+	static CreateRoomRequest deserializeCreateRoomRequest(std::vector<char> req);
 	static unsigned int binaryToInt(char* buff);
 };
