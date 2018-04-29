@@ -20,6 +20,10 @@ void LoginManager::signup(std::string name, std::string pass, std::string email)
 
 void LoginManager::login(std::string name, std::string pass)
 {
+	if (getUser(name) != m_logged_users.end())
+	{
+		throw;
+	}
 	if (!m_database.doesUserExist(name))
 	{
 		throw;

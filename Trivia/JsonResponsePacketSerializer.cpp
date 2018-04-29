@@ -24,13 +24,13 @@ std::vector<char> JsonResponsePacketSerializer::serializeResponse(LogoutResponse
 	return createBuff(j, LOGOUT_RESP_CODE);
 }
 
-std::vector<char> JsonResponsePacketSerializer::serializeResponse(GetRoomResponse resp)
+std::vector<char> JsonResponsePacketSerializer::serializeResponse(GetRoomsResponse resp)
 {
 	json j = { {"status", resp.status}, {"rooms", createJsonRoomArray(resp.rooms)} };
 	return createBuff(j, GETROOM_RESP_CODE);
 }
 
-std::vector<char> JsonResponsePacketSerializer::serializerResponse(GetPlayersInRoomResponse resp)
+std::vector<char> JsonResponsePacketSerializer::serializeResponse(GetPlayersInRoomResponse resp)
 {
 	json j = { { "status", resp.status },{ "users", resp.users } };
 	return createBuff(j, GETPLAYERSROOM_RESP_CODE);
