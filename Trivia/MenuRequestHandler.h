@@ -1,8 +1,9 @@
 #pragma once
-#include "IRequestHandler.h"
+
 #include "RequestHandlerFactory.h"
 #include "JsonRequestPacketDeserializer.h"
 #include "JsonResponsePacketSerializer.h"
+#include "IRequestHandler.h"
 #include "LoggedUser.h"
 #include "HighscoreTable.h"
 #include "RoomManager.h"

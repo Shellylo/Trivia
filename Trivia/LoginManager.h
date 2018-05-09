@@ -3,6 +3,7 @@
 #include <vector>
 #include "LoggedUser.h"
 #include "IDatabase.h"
+#include "Helper.h"
 
 class LoginManager
 {
@@ -16,8 +17,6 @@ public:
 private:
 	IDatabase& m_database;
 	std::vector<LoggedUser> m_logged_users;
-
-	std::vector<LoggedUser>::iterator getUser(std::string name);
 
 	bool isValidName(std::string name) { return true; }
 	bool isValidPass(std::string pass) { return true; }

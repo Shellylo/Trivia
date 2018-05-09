@@ -3,6 +3,8 @@
 #include "LoggedUser.h"
 #include <vector>
 #include <iostream>
+#include "JsonRequestPacketDeserializer.h"
+#include "Helper.h"
 
 struct RoomData
 {
@@ -17,9 +19,12 @@ struct RoomData
 class Room
 {
 public:
+	Room(unsigned int id, CreateRoomRequest roomData, LoggedUser manager);
 	void addUser(LoggedUser user);
-	void removeUser(std::string user); //string or logged user?
-	std::vector<LoggedUser> getAllUsers();
+	void removeUser(LoggedUser user);
+	
+	RoomData getRoomData() const;
+	std::vector<LoggedUser> getAllUsers() const;
 
 private:
 	RoomData m_metadata;
