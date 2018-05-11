@@ -113,6 +113,7 @@
   <ItemGroup>
     <ClInclude Include="Communicator.h" />
     <ClInclude Include="Helper.h" />
+    <ClInclude Include="Highscore.h" />
     <ClInclude Include="HighscoreTable.h" />
     <ClInclude Include="IDatabase.h" />
     <ClInclude Include="IRequestHandler.h" />

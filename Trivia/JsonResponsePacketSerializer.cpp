@@ -48,6 +48,12 @@ std::vector<char> JsonResponsePacketSerializer::serializeResponse(CreateRoomResp
 	return createBuff(j, CREATEROOM_RESP_CODE);
 }
 
+std::vector<char> JsonResponsePacketSerializer::serializeResponse(HighscoreResponse resp)
+{
+	json j = { { "status", resp.status }, { "highscores", createJsonHighscoresArray(resp.highscores) } };
+	return createBuff(j, GETHIGHSCORES_RESP_CODE);
+}
+
 std::vector<char> JsonResponsePacketSerializer::intToBinary(unsigned int num)
 {
 	std::vector<char> ret = { '\0', '\0','\0','\0' };
@@ -76,6 +82,16 @@ std::vector<json> JsonResponsePacketSerializer::createJsonRoomArray(std::vector<
 	for(int i = 0; i < rooms.size(); i++)
 	{
 		jrooms.push_back({ {"id", rooms[i].id}, {"name", rooms[i].name}, {"maxPlayers", rooms[i].maxPlayers}, {"timePerQuestion", rooms[i].timePerQuestion}, {"isActive", rooms[i].isActive} });
+	}
+	return jrooms;
+}
+
+std::vector<json> JsonResponsePacketSerializer::createJsonHighscoresArray(std::vector<Highscore> highscores)
+{
+	std::vector<json> jrooms;
+	for (int i = 0; i < highscores.size(); i++)
+	{
+		jrooms.push_back({ { "username", highscores[i].username },{ "score", highscores[i].score },{ "time", highscores[i].time } });
 	}
 	return jrooms;
 }

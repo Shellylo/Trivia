@@ -86,4 +86,5 @@ private:
 	static std::vector<char> intToBinary(unsigned int num);
 	static std::vector<char> createBuff(json j, unsigned int code);
 	static std::vector<json> createJsonRoomArray(std::vector<RoomData> rooms);
+	static std::vector<json> createJsonHighscoresArray(std::vector<Highscore> highscores);
 };
