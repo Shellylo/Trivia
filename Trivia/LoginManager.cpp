@@ -20,36 +20,28 @@ void LoginManager::signup(std::string name, std::string pass, std::string email)
 
 void LoginManager::login(std::string name, std::string pass)
 {
-	if (!m_database.doesUserExist(name))
+	LoggedUser user(name);
+	if (Helper::find(m_logged_users, user) != m_logged_users.end()) // user doesn't logged
 	{
 		throw std::exception();
 	}
-	if (!m_database.passMatches(name, pass))
+	if (!m_database.doesUserExist(name)) // user doesn't exist
 	{
 		throw;
 	}
-	m_logged_users.push_back(LoggedUser(name));
+	if (!m_database.passMatches(name, pass)) // password doesn't match
+	{
+		throw;
+	}
+	m_logged_users.push_back(user);
 }
 
 void LoginManager::logout(std::string name)
 {
-	std::vector<LoggedUser>::iterator user = getUser(name);
+	std::vector<LoggedUser>::iterator user = Helper::find(m_logged_users, LoggedUser(name));
 	if (user == m_logged_users.end())
 	{
 		throw;
 	}
 	m_logged_users.erase(user);
-}
-
-std::vector<LoggedUser>::iterator LoginManager::getUser(std::string name)
-{
-	std::vector<LoggedUser>::iterator ret = m_logged_users.end();
-	for (std::vector<LoggedUser>::iterator user = m_logged_users.begin(); user != m_logged_users.end() && ret == m_logged_users.end(); user++)
-	{
-		if (user->getUsername() == name)
-		{
-			ret = user;
-		}
-	}
-	return ret;
 }

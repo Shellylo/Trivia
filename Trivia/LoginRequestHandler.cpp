@@ -15,6 +15,11 @@ RequestResult LoginRequestHandler::handleRequest(Request req)
 	return req.reqCode == LOGIN_REQ_CODE ? login(req) : signup(req);
 }
 
+void LoginRequestHandler::disconnectUser(std::string user)
+{
+	m_loginManager.logout(user);
+}
+
 RequestResult LoginRequestHandler::login(Request req)
 {
 	LoginRequest request = JsonRequestPacketDeserializer::deserializeLoginRequest(req.buffer);
@@ -27,7 +32,7 @@ RequestResult LoginRequestHandler::login(Request req)
 	{
 		result.status = 0;
 	}
-	return result.status ? RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), m_handlerFactory.createMenuRequestHandler() } : RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), nullptr };
+	return result.status ? RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), m_handlerFactory.createMenuRequestHandler(LoggedUser(request.username)) } : RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), nullptr };
 }
 
 RequestResult LoginRequestHandler::signup(Request req)
@@ -42,5 +47,5 @@ RequestResult LoginRequestHandler::signup(Request req)
 	{
 		result.status = 0;
 	}
-	return result.status ? RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), m_handlerFactory.createMenuRequestHandler() } : RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), nullptr };
+	return result.status ? RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), this } : RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), nullptr };
 }

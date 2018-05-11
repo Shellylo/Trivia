@@ -10,6 +10,8 @@
 #define DB_NAME "TriviaDB.sqlite"
 #define TABLES_NUM 3
 
+#define HIGHSCORES_NUM "5"
+
 class SqliteDatabase : public IDatabase
 { 
 public:
@@ -18,7 +20,9 @@ public:
 	bool open() override;
 	void close() override;
 
-	std::map<LoggedUser, int> getHighscores() override;
+	std::vector<Highscore> getHighscores() override;
+	std::vector<Highscore> getHighscores(std::string username) override;
+	//std::map<LoggedUser, int> getHighscores() override; // why?
 	bool doesUserExist(std::string username) override;
 	void addUser(std::string username, std::string pass, std::string email) override;
 	bool passMatches(std::string username, std::string pass) override;
@@ -32,4 +36,5 @@ private:
 	void sendStatement(std::string statement, int(*func)(void *, int, char **, char **), void * ans);
 
 	static int doesExistCallback(void * data, int argc, char ** argv, char ** colName);
+	static int getHighscores(void * data, int argc, char ** argv, char ** colName);
 };

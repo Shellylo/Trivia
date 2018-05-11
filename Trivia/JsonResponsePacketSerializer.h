@@ -5,6 +5,7 @@
 #include <bitset>
 #include "Room.h"
 #include "json.hpp"
+#include "HighscoreTable.h"
 
 #define ERROR_RESP_CODE 0
 #define LOGIN_RESP_CODE 1
@@ -14,6 +15,7 @@
 #define GETPLAYERSROOM_RESP_CODE 5
 #define JOINROOM_RESP_CODE 6
 #define CREATEROOM_RESP_CODE 7
+#define GETHIGHSCORES_RESP_CODE 8
 #define SIZE_LEN 4
 #define CHAR_SIZE 8
 
@@ -61,11 +63,11 @@ struct CreateRoomResponse
 	unsigned int status;
 };
 
-//struct HighscoreResponse
-//{
-//	unsigned int status;
-//	std::vector<HighScore> highscores;
-//};
+struct HighscoreResponse
+{
+	unsigned int status;
+	std::vector<Highscore> highscores;
+};
 
 class JsonResponsePacketSerializer
 {
@@ -77,53 +79,53 @@ public:
 	*/
 	static std::vector<char> serializeResponse(ErrorResponse resp);
 	/*
-	Serializes login response
-	Input: login response
-	Output: buffer
+    	Serializes login response
+    	Input: login response
+    	Output: buffer
 	*/
 	static std::vector<char> serializeResponse(LoginResponse resp);
 	/*
-	Serializes signup response
-	Input: signup response
-	Output: buffer
+    	Serializes signup response
+    	Input: signup response
+    	Output: buffer
 	*/
 	static std::vector<char> serializeResponse(SignupResponse resp);
 	/*
-	Serializes logout response
-	Input: logout response
-	Output: buffer
+    	Serializes logout response
+    	Input: logout response
+    	Output: buffer
 	*/
 	static std::vector<char> serializeResponse(LogoutResponse resp);
 	/*
-	Serializes get rooms response
-	Input: get rooms response
-	Output: buffer
+    	Serializes get rooms response
+    	Input: get rooms response
+    	Output: buffer
 	*/
 	static std::vector<char> serializeResponse(GetRoomsResponse resp);
 	/*
-	Serializes get players in room response
-	Input: get players in room response
-	Output: buffer
+    	Serializes get players in room response
+    	Input: get players in room response
+    	Output: buffer
 	*/
 	static std::vector<char> serializerResponse(GetPlayersInRoomResponse resp);
 	/*
-	Serializes join room response
-	Input: join room response
-	Output: buffer
+    	Serializes join room response
+    	Input: join room response
+    	Output: buffer
 	*/
 	static std::vector<char> serializeResponse(JoinRoomResponse resp);
 	/*
-	Serializes create room response
-	Input: create room response
-	Output: buffer
+    	Serializes create room response
+    	Input: create room response
+    	Output: buffer
 	*/
 	static std::vector<char> serializeResponse(CreateRoomResponse resp);
 	/*
-	Serializes get highscores response
-	Input: get highscores response
-	Output: buffer
+    	Serializes get highscores response
+    	Input: get highscores response
+    	Output: buffer
 	*/
-//	static std::vector<char> serializeResponse(HighscoreResponse resp);
+	static std::vector<char> serializeResponse(HighscoreResponse resp);
 
 private:
 	/*
@@ -144,4 +146,10 @@ private:
 		Output: vector of jsons
 	*/
 	static std::vector<json> createJsonRoomArray(std::vector<RoomData> rooms);
+	/*
+		Converts vector of highscores to vector of jsons
+		Input: vector of highscores
+		Output: vector of jsons
+	*/
+	static std::vector<json> createJsonHighscoresArray(std::vector<Highscore> highscores);
 };

@@ -17,6 +17,7 @@ public:
 
 	bool isRequestRelevant(Request req) override;
 	RequestResult handleRequest(Request req) override;
+	void disconnectUser(std::string user);
 
 private:
 	LoginManager& m_loginManager;

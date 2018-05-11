@@ -8,3 +8,8 @@ std::string LoggedUser::getUsername()
 {
 	return m_username;
 }
+
+bool LoggedUser::operator==(LoggedUser & other)
+{
+	return m_username == other.m_username;
+}
