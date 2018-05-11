@@ -6,9 +6,21 @@
 class Server
 {
 public:
+	/*
+		Creates a server
+		Input: database
+	*/
 	Server(IDatabase& database);
+	/*
+		Distructs the server
+	*/
 	~Server();
 
+	/*
+		Runs the server
+		Input: none
+		Output: none
+	*/
 	void run();
 
 private:

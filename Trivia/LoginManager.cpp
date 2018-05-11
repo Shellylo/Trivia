@@ -22,7 +22,7 @@ void LoginManager::login(std::string name, std::string pass)
 {
 	if (!m_database.doesUserExist(name))
 	{
-		throw;
+		throw std::exception();
 	}
 	if (!m_database.passMatches(name, pass))
 	{
