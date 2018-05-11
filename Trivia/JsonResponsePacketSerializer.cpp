@@ -88,10 +88,10 @@ std::vector<json> JsonResponsePacketSerializer::createJsonRoomArray(std::vector<
 
 std::vector<json> JsonResponsePacketSerializer::createJsonHighscoresArray(std::vector<Highscore> highscores)
 {
-	std::vector<json> jrooms;
+	std::vector<json> jhighscores;
 	for (int i = 0; i < highscores.size(); i++)
 	{
-		jrooms.push_back({ { "username", highscores[i].username },{ "score", highscores[i].score },{ "time", highscores[i].time } });
+		jhighscores.push_back({ { "username", highscores[i].username },{ "score", highscores[i].score },{ "time", highscores[i].time } });
 	}
-	return jrooms;
+	return jhighscores;
 }

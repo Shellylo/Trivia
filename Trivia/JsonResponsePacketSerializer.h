@@ -107,7 +107,7 @@ public:
     	Input: get players in room response
     	Output: buffer
 	*/
-	static std::vector<char> serializerResponse(GetPlayersInRoomResponse resp);
+	static std::vector<char> serializeResponse(GetPlayersInRoomResponse resp);
 	/*
     	Serializes join room response
     	Input: join room response
