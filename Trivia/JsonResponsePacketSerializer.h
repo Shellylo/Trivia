@@ -72,19 +72,84 @@ struct HighscoreResponse
 class JsonResponsePacketSerializer
 {
 public:
+	/*
+		Serializes error response
+		Input: error response
+		Output: buffer
+	*/
 	static std::vector<char> serializeResponse(ErrorResponse resp);
+	/*
+    	Serializes login response
+    	Input: login response
+    	Output: buffer
+	*/
 	static std::vector<char> serializeResponse(LoginResponse resp);
+	/*
+    	Serializes signup response
+    	Input: signup response
+    	Output: buffer
+	*/
 	static std::vector<char> serializeResponse(SignupResponse resp);
+	/*
+    	Serializes logout response
+    	Input: logout response
+    	Output: buffer
+	*/
 	static std::vector<char> serializeResponse(LogoutResponse resp);
+	/*
+    	Serializes get rooms response
+    	Input: get rooms response
+    	Output: buffer
+	*/
 	static std::vector<char> serializeResponse(GetRoomsResponse resp);
-	static std::vector<char> serializeResponse(GetPlayersInRoomResponse resp);
+	/*
+    	Serializes get players in room response
+    	Input: get players in room response
+    	Output: buffer
+	*/
+	static std::vector<char> serializerResponse(GetPlayersInRoomResponse resp);
+	/*
+    	Serializes join room response
+    	Input: join room response
+    	Output: buffer
+	*/
 	static std::vector<char> serializeResponse(JoinRoomResponse resp);
+	/*
+    	Serializes create room response
+    	Input: create room response
+    	Output: buffer
+	*/
 	static std::vector<char> serializeResponse(CreateRoomResponse resp);
+	/*
+    	Serializes get highscores response
+    	Input: get highscores response
+    	Output: buffer
+	*/
 	static std::vector<char> serializeResponse(HighscoreResponse resp);
 
 private:
+	/*
+		Converts int to 4 bytes of buffer
+		Input: unsigned int
+		Output: buffer
+	*/
 	static std::vector<char> intToBinary(unsigned int num);
+	/*
+		Creates a buffer response from a json
+		Input: the json and the response code
+		Output: buffer
+	*/
 	static std::vector<char> createBuff(json j, unsigned int code);
+	/*
+		Converts vector of rooms to vector of jsons
+		Input: vector of rooms
+		Output: vector of jsons
+	*/
 	static std::vector<json> createJsonRoomArray(std::vector<RoomData> rooms);
+	/*
+		Converts vector of highscores to vector of jsons
+		Input: vector of highscores
+		Output: vector of jsons
+	*/
 	static std::vector<json> createJsonHighscoresArray(std::vector<Highscore> highscores);
 };

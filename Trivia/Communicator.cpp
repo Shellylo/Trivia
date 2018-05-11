@@ -1,4 +1,8 @@
 #include "Communicator.h"
+#include <mutex>
+
+std::mutex m;
+std::condition_variable cv;
 
 Communicator::Communicator(RequestHandlerFactory & handlerFactory) : m_handleFactory(handlerFactory)
 {
@@ -23,7 +27,7 @@ void Communicator::bindAndListen()
 
 	struct sockaddr_in sa = { 0 };
 
-	sa.sin_port = htons(2431); // port that server will listen for
+	sa.sin_port = htons(SERVER_PORT); // port that server will listen for
 	sa.sin_family = AF_INET;   // must be AF_INET
 	sa.sin_addr.s_addr = INADDR_ANY;    // when there are few ip's for the machine. We will use always "INADDR_ANY"
 
@@ -46,23 +50,25 @@ void Communicator::handleRequests()
 {
 	while (true)
 	{
-		if (!rq.empty())
+		if (rq.empty())
 		{
-			std::pair<SOCKET, Request> sock_req = rq.front();
-			rq.pop();
-			std::vector<char> ans = JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Irrelevant request" });
-			if (m_clients[sock_req.first]->isRequestRelevant(sock_req.second))
-			{
-				RequestResult resp = m_clients[sock_req.first]->handleRequest(sock_req.second);
-				if (resp.newHandler)
-				{
-					delete m_clients[sock_req.first];
-					m_clients[sock_req.first] = resp.newHandler;
-				}
-				ans = resp.buffer;
-			}
-			send(sock_req.first, &ans[0], ans.size(), 0);
+			std::unique_lock<std::mutex> lk(m);
+			cv.wait(lk);
 		}
+		std::pair<SOCKET, Request> sock_req = rq.front();
+		rq.pop();
+		std::vector<char> ans = JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Irrelevant request" });
+		if (m_clients[sock_req.first]->isRequestRelevant(sock_req.second))
+		{
+			RequestResult resp = m_clients[sock_req.first]->handleRequest(sock_req.second);
+			if (resp.newHandler)
+			{
+				delete m_clients[sock_req.first];
+				m_clients[sock_req.first] = resp.newHandler;
+			}
+			ans = resp.buffer;
+		}
+		send(sock_req.first, &ans[0], ans.size(), 0);
 	}
 }
 
@@ -80,7 +86,7 @@ void Communicator::startThreadForNewClient()
 }
 
 void Communicator::clientHandler(SOCKET socket)
-{
+{ 
 	while (true)
 	{
 		std::vector<char> info(INFO_LEN);
@@ -90,5 +96,6 @@ void Communicator::clientHandler(SOCKET socket)
 		recv(socket, &data[0], size, 0);
 		Request req = { info[0], size, data };
 		rq.push(std::pair<SOCKET, Request>(socket, req));
+		cv.notify_one();
 	}
 }

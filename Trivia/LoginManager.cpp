@@ -23,7 +23,7 @@ void LoginManager::login(std::string name, std::string pass)
 	LoggedUser user(name);
 	if (Helper::find(m_logged_users, user) != m_logged_users.end()) // user doesn't logged
 	{
-		throw;
+		throw std::exception();
 	}
 	if (!m_database.doesUserExist(name)) // user doesn't exist
 	{

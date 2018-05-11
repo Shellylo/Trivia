@@ -42,10 +42,40 @@ struct CreateRoomRequest
 class JsonRequestPacketDeserializer
 {
 public:
+	/*
+		Desirializes login request
+		Input: Buffer
+		Output: login request
+	*/
 	static LoginRequest deserializeLoginRequest(std::vector<char> req);
+	/*
+		Desirializes signup request
+		Input: Buffer
+		Output: signup request
+	*/
 	static SignupRequest deserializeSignupRequest(std::vector<char> req);
+	/*
+		Desirializes get players in room request
+		Input: Buffer
+		Output: get players in request
+	*/
 	static GetPlayersInRoomRequest deserializeGetPlayersRequest(std::vector<char> req);
+	/*
+		Desirializes join room request
+		Input: Buffer
+		Output: join room request
+	*/
 	static JoinRoomRequest deserializeJoinRoomRequest(std::vector<char> req);
+	/*
+		Desirializes create room request
+		Input: Buffer
+		Output: create room request
+	*/
 	static CreateRoomRequest deserializeCreateRoomRequest(std::vector<char> req);
+	/*
+		Converts a buffer to an unsigned int
+		Inputer: Buffer
+		Output: unsigned int
+	*/
 	static unsigned int binaryToInt(char* buff);
 };
