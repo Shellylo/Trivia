@@ -12,14 +12,26 @@ class MenuRequestHandler;
 class RequestHandlerFactory
 {
 public:
+	/*
+		Creates a RequestHandlerFactory
+	*/
 	RequestHandlerFactory(IDatabase& database);
 
+	/*
+		Creates a LoginRequestHandler (dynamic allocation)
+		Input: none
+		Output: the pointer to the object
+	*/
 	LoginRequestHandler* createLoginRequestHandler();
-	MenuRequestHandler* createMenuRequestHandler(LoggedUser user);// temp - change later the return value
+	/*
+		Creates a MenuRequestHandler (dynamic allocation)
+		Input: none
+		Output: the pointer to the object
+	*/
+	MenuRequestHandler* createMenuRequestHandler(LoggedUser user);
 
 private:
 	LoginManager m_loginManager;
 	RoomManager m_roomManager;
 	HighscoreTable m_highscoreTable;
-
 };
