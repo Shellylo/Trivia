@@ -6,6 +6,10 @@
 #include "JsonRequestPacketDeserializer.h"
 #include "Helper.h"
 
+#define WAITING 1
+#define CLOSED 2
+#define STARTED 3
+
 struct RoomData
 {
 	unsigned int id;
@@ -13,12 +17,14 @@ struct RoomData
 	unsigned int maxPlayers; //was string changed to int
 	unsigned int questionCount; //added this
 	unsigned int timePerQuestion;
-	bool isActive; //was int changed to boolean
+	unsigned int roomState; // 1 - waiting, 2 - closed, 3 - game started
 };
 
 class Room
 {
 public:
+	Room();
+
 	/*
 		Creates a Room
 	*/

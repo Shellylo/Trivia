@@ -4,11 +4,12 @@ RoomManager::RoomManager()
 {
 }
 
-void RoomManager::createRoom(LoggedUser user, CreateRoomRequest roomData)
+Room& RoomManager::createRoom(LoggedUser user, CreateRoomRequest roomData)
 {
 	static int id = 0;
 	m_rooms.insert(std::pair<int, Room>(id, Room(id, roomData, user)));
 	id++;
+	return m_rooms[id - 1];
 }
 
 void RoomManager::deleteRoom(int ID)
@@ -21,22 +22,27 @@ void RoomManager::deleteRoom(int ID)
 
 bool RoomManager::getRoomState(int ID)
 {
-	return getRoom(ID).getRoomData().isActive;
+	return getRoom(ID).getRoomData().roomState;
 }
 
-void RoomManager::joinRoom(LoggedUser user, int ID)
+Room& RoomManager::joinRoom(LoggedUser user, int ID)
 {
-	Room room = getRoom(ID);
+	Room& room = getRoom(ID);
+	if (room.getRoomData().roomState != WAITING)
+	{
+		throw std::exception();
+	}
 	if (doesUserExist(user, room)) // user already exists
 	{
 		throw std::exception();
 	}
 	room.addUser(user);
+	return room;
 }
 
 void RoomManager::leaveRoom(LoggedUser user, int ID)
 {
-	Room room = getRoom(ID);
+	Room& room = getRoom(ID);
 	if (!doesUserExist(user, room)) // user doesn't exist
 	{
 		throw std::exception();
@@ -65,7 +71,7 @@ std::vector<RoomData> RoomManager::getRooms()
 	return ret;
 }
 
-Room RoomManager::getRoom(int ID)
+Room& RoomManager::getRoom(int ID)
 {
 	std::map<int, Room>::iterator it = m_rooms.find(ID);
 	if (it == m_rooms.end()) // room not found

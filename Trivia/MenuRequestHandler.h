@@ -8,13 +8,6 @@
 #include "HighscoreTable.h"
 #include "RoomManager.h"
 
-#define SIGNOUT_REQ_CODE 3
-#define GETROOMS_REQ_CODE 4
-#define GETPLAYERSROOM_REQ_CODE 5
-#define JOINROOM_REQ_CODE 6
-#define CREATEROOM_REQ_CODE 7
-#define GETHIGHSCORES_REQ_CODE 8
-
 class RequestHandlerFactory;
 
 class MenuRequestHandler : public IRequestHandler

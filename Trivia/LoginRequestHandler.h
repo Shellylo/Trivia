@@ -5,9 +5,6 @@
 #include "JsonRequestPacketDeserializer.h"
 #include "JsonResponsePacketSerializer.h"
 
-#define LOGIN_REQ_CODE 1
-#define SIGNUP_REQ_CODE 2
-
 class RequestHandlerFactory;
 
 class LoginRequestHandler : public IRequestHandler

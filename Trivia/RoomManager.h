@@ -20,7 +20,7 @@ public:
 		Input: user that created the room, room data
 		Output: none (exception if there is a problem)	
 	*/
-	void createRoom(LoggedUser user, CreateRoomRequest roomData);
+	Room& createRoom(LoggedUser user, CreateRoomRequest roomData);
 	/*
 		Deletes a room from the map of rooms
 		Input: room id
@@ -38,7 +38,7 @@ public:
 		Input: user to add, room id
 		Output: none (exception if there is a problem)
 	*/
-	void joinRoom(LoggedUser user, int ID);
+	Room& joinRoom(LoggedUser user, int ID);
 	/*
 		Removes a user from the room
 		Input: user to remove, room id
@@ -65,7 +65,7 @@ private:
 		Input: room id
 		Output: room (exception if there is a problem)
 	*/
-	Room getRoom(int ID);
+	Room& getRoom(int ID);
 	/*
 		Checks if a user exists in a room
 		Input: user and room
