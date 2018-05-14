@@ -27,7 +27,7 @@ std::vector<char> JsonResponsePacketSerializer::serializeResponse(LogoutResponse
 std::vector<char> JsonResponsePacketSerializer::serializeResponse(GetRoomsResponse resp)
 {
 	json j = { {"status", resp.status}, {"rooms", createJsonRoomArray(resp.rooms)} };
-	return createBuff(j, GETROOM_RESP_CODE);
+	return createBuff(j, GETROOMS_RESP_CODE);
 }
 
 std::vector<char> JsonResponsePacketSerializer::serializeResponse(GetPlayersInRoomResponse resp)
@@ -81,17 +81,17 @@ std::vector<json> JsonResponsePacketSerializer::createJsonRoomArray(std::vector<
 	std::vector<json> jrooms;
 	for(int i = 0; i < rooms.size(); i++)
 	{
-		jrooms.push_back({ {"id", rooms[i].id}, {"name", rooms[i].name}, {"maxPlayers", rooms[i].maxPlayers}, {"timePerQuestion", rooms[i].timePerQuestion}, {"isActive", rooms[i].isActive} });
+		jrooms.push_back({ {"id", rooms[i].id}, {"name", rooms[i].name}, {"maxPlayers", rooms[i].maxPlayers}, {"timePerQuestion", rooms[i].timePerQuestion}, {"isActive", rooms[i].roomState} });
 	}
 	return jrooms;
 }
 
 std::vector<json> JsonResponsePacketSerializer::createJsonHighscoresArray(std::vector<Highscore> highscores)
 {
-	std::vector<json> jrooms;
+	std::vector<json> jhighscores;
 	for (int i = 0; i < highscores.size(); i++)
 	{
-		jrooms.push_back({ { "username", highscores[i].username },{ "score", highscores[i].score },{ "time", highscores[i].time } });
+		jhighscores.push_back({ { "username", highscores[i].username },{ "score", highscores[i].score },{ "time", highscores[i].time } });
 	}
-	return jrooms;
+	return jhighscores;
 }

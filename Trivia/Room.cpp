@@ -1,6 +1,10 @@
 #include "Room.h"
 
-Room::Room(unsigned int id, CreateRoomRequest roomData, LoggedUser manager) : m_metadata(RoomData{id, roomData.name, roomData.maxPlayers, roomData.questionCount, roomData.answerTimeout, false})
+Room::Room()
+{
+}
+
+Room::Room(unsigned int id, CreateRoomRequest roomData, LoggedUser manager) : m_metadata(RoomData{id, roomData.name, roomData.maxPlayers, roomData.questionCount, roomData.answerTimeout, WAITING})
 {
 	m_users.push_back(manager);
 }

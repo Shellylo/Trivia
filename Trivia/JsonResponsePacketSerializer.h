@@ -7,15 +7,23 @@
 #include "json.hpp"
 #include "HighscoreTable.h"
 
-#define ERROR_RESP_CODE 0
-#define LOGIN_RESP_CODE 1
-#define SIGNUP_RESP_CODE 2
-#define LOGOUT_RESP_CODE 3
-#define GETROOM_RESP_CODE 4
-#define GETPLAYERSROOM_RESP_CODE 5
-#define JOINROOM_RESP_CODE 6
-#define CREATEROOM_RESP_CODE 7
-#define GETHIGHSCORES_RESP_CODE 8
+enum respCodes
+{
+	ERROR_RESP_CODE,
+	LOGIN_RESP_CODE,
+	SIGNUP_RESP_CODE,
+	LOGOUT_RESP_CODE,
+	GETROOMS_RESP_CODE,
+	GETPLAYERSROOM_RESP_CODE,
+	JOINROOM_RESP_CODE,
+	CREATEROOM_RESP_CODE,
+	GETHIGHSCORES_RESP_CODE,
+	CLOSEROOM_RESP_CODE,
+	STARTGAME_RESP_CODE,
+	GETROOMSTATE_RESP_CODE,
+	LEAVEROOM_RESP_CODE
+};
+
 #define SIZE_LEN 4
 #define CHAR_SIZE 8
 
@@ -69,6 +77,30 @@ struct HighscoreResponse
 	std::vector<Highscore> highscores;
 };
 
+struct CloseRoomResponse
+{
+	unsigned int status;
+};
+
+struct StartGameResponse
+{
+	unsigned int status;
+};
+
+struct GetRoomStateResponse
+{
+	unsigned int status;
+	unsigned int gameStatus;
+	std::vector<std::string> players;
+	unsigned int questionCount;
+	unsigned int answerTimeout;
+};
+
+struct LeaveRoomResponse
+{
+	unsigned int status;
+};
+
 class JsonResponsePacketSerializer
 {
 public:
@@ -107,7 +139,7 @@ public:
     	Input: get players in room response
     	Output: buffer
 	*/
-	static std::vector<char> serializerResponse(GetPlayersInRoomResponse resp);
+	static std::vector<char> serializeResponse(GetPlayersInRoomResponse resp);
 	/*
     	Serializes join room response
     	Input: join room response
@@ -126,6 +158,10 @@ public:
     	Output: buffer
 	*/
 	static std::vector<char> serializeResponse(HighscoreResponse resp);
+	static std::vector<char> serializeResponse(CloseRoomResponse resp);
+	static std::vector<char> serializeResponse(StartGameResponse resp);
+	static std::vector<char> serializeResponse(GetRoomStateResponse resp);
+	static std::vector<char> serializeResponse(LeaveRoomResponse resp);
 
 private:
 	/*

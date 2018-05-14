@@ -6,7 +6,7 @@ MenuRequestHandler::MenuRequestHandler(RoomManager & manager, HighscoreTable & h
 
 bool MenuRequestHandler::isRequestRelevant(Request req)
 {
-	return req.reqCode == SIGNOUT_REQ_CODE || req.reqCode == GETROOMS_REQ_CODE || req.reqCode == GETPLAYERSROOM_REQ_CODE ||
+	return req.reqCode == LOGOUT_REQ_CODE || req.reqCode == GETROOMS_REQ_CODE || req.reqCode == GETPLAYERSROOM_REQ_CODE ||
 		   req.reqCode == JOINROOM_REQ_CODE || req.reqCode == CREATEROOM_REQ_CODE || req.reqCode == GETHIGHSCORES_REQ_CODE;
 }
 
@@ -15,7 +15,7 @@ RequestResult MenuRequestHandler::handleRequest(Request req)
 	RequestResult reqRes;
 	switch(req.reqCode)
 	{
-	case SIGNOUT_REQ_CODE:
+	case LOGOUT_REQ_CODE:
 		reqRes = signout(req);
 		break;
 	case GETROOMS_REQ_CODE:
@@ -99,28 +99,30 @@ RequestResult MenuRequestHandler::joinRoom(Request req)
 {
 	JoinRoomRequest request = JsonRequestPacketDeserializer::deserializeJoinRoomRequest(req.buffer);
 	LoginResponse result = { 1 };
+	RoomMemberRequestHandler* rmrh = nullptr;
 	try
 	{
-		m_roomManager.joinRoom(m_user, request.roomId);
+		rmrh = m_handlerFactory.createRoomMemberRequestHandler(m_roomManager.joinRoom(m_user, request.roomId), m_user);
 	}
 	catch (...)
 	{
 		result.status = 0;
 	} 
-	return result.status ? RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), m_handlerFactory.RoomMemberRequestHandler() } : RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), nullptr };
+	return result.status ? RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), rmrh } : RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), nullptr };
 }
 
 RequestResult MenuRequestHandler::createRoom(Request req)
 {
 	CreateRoomRequest request = JsonRequestPacketDeserializer::deserializeCreateRoomRequest(req.buffer);
 	LoginResponse result = { 1 };
+	RoomAdminRequestHandler* rarh = nullptr;
 	try
 	{
-		m_roomManager.createRoom(m_user, request);
+		rarh = m_handlerFactory.createRoomAdminRequestHandler(m_roomManager.createRoom(m_user, request), m_user);
 	}
 	catch (...)
 	{
 		result.status = 0;
 	}
-	return result.status ? RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), m_handlerFactory.createRoomAdminRequestHandler() } : RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), nullptr };
+	return result.status ? RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), rarh } : RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), nullptr };
 }
