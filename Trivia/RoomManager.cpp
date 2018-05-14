@@ -1,5 +1,9 @@
 #include "RoomManager.h"
 
+RoomManager::RoomManager()
+{
+}
+
 Room& RoomManager::createRoom(LoggedUser user, CreateRoomRequest roomData)
 {
 	static int id = 0;
@@ -12,7 +16,7 @@ void RoomManager::deleteRoom(int ID)
 {
 	if (!m_rooms.erase(ID))
 	{
-		throw;
+		throw std::exception();
 	}
 }
 
@@ -30,7 +34,7 @@ Room& RoomManager::joinRoom(LoggedUser user, int ID)
 	}
 	if (doesUserExist(user, room)) // user already exists
 	{
-		throw;
+		throw std::exception();
 	}
 	room.addUser(user);
 	return room;
@@ -41,7 +45,7 @@ void RoomManager::leaveRoom(LoggedUser user, int ID)
 	Room& room = getRoom(ID);
 	if (!doesUserExist(user, room)) // user doesn't exist
 	{
-		throw;
+		throw std::exception();
 	}
 	room.removeUser(user);
 }
@@ -72,7 +76,7 @@ Room& RoomManager::getRoom(int ID)
 	std::map<int, Room>::iterator it = m_rooms.find(ID);
 	if (it == m_rooms.end()) // room not found
 	{
-		throw;
+		throw std::exception();
 	}
 	return it->second;
 }
