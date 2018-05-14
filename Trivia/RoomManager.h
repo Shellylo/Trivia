@@ -32,7 +32,7 @@ public:
 		Input: room id
 		Output: the state of the room (exception if there is a problem)
 	*/
-	bool getRoomState(int ID);
+	int getRoomState(int ID);
 	/*
 		Adds a user to the room
 		Input: user to add, room id

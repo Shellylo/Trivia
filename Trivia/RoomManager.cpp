@@ -7,9 +7,9 @@ RoomManager::RoomManager()
 Room& RoomManager::createRoom(LoggedUser user, CreateRoomRequest roomData)
 {
 	static int id = 0;
-	m_rooms.insert(std::pair<int, Room>(id, Room(id, roomData, user)));
-	id++;
-	return m_rooms[id - 1];
+	m_rooms[id] = Room(id, roomData, user);
+	//m_rooms.insert(std::pair<int, Room>(id, Room(id, roomData, user)));
+	return m_rooms[id++];
 }
 
 void RoomManager::deleteRoom(int ID)
@@ -20,7 +20,7 @@ void RoomManager::deleteRoom(int ID)
 	}
 }
 
-bool RoomManager::getRoomState(int ID)
+int RoomManager::getRoomState(int ID)
 {
 	return getRoom(ID).getRoomData().roomState;
 }

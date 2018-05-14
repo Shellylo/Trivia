@@ -23,6 +23,9 @@ struct RoomData
 class Room
 {
 public:
+	/*
+		Creates a Room (default constructor for std::map::operator[])
+	*/
 	Room();
 
 	/*
