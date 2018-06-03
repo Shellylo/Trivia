@@ -21,7 +21,8 @@ enum respCodes
 	CLOSEROOM_RESP_CODE,
 	STARTGAME_RESP_CODE,
 	GETROOMSTATE_RESP_CODE,
-	LEAVEROOM_RESP_CODE
+	LEAVEROOM_RESP_CODE,
+	JOINGAME_RESP_CODE
 };
 
 #define SIZE_LEN 4
@@ -90,13 +91,18 @@ struct StartGameResponse
 struct GetRoomStateResponse
 {
 	unsigned int status;
-	unsigned int gameStatus;
+	unsigned int roomStatus;
 	std::vector<std::string> players;
 	unsigned int questionCount;
 	unsigned int answerTimeout;
 };
 
 struct LeaveRoomResponse
+{
+	unsigned int status;
+};
+
+struct JoinGameResponse
 {
 	unsigned int status;
 };
