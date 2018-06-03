@@ -66,6 +66,18 @@ std::vector<char> JsonResponsePacketSerializer::serializeResponse(LeaveRoomRespo
 	return createBuff(j, LEAVEROOM_RESP_CODE);
 }
 
+std::vector<char> JsonResponsePacketSerializer::serializeResponse(CloseRoomResponse resp)
+{
+	json j = { { "status", resp.status } };
+	return createBuff(j, CLOSEROOM_RESP_CODE);
+}
+
+std::vector<char> JsonResponsePacketSerializer::serializeResponse(StartGameResponse resp)
+{
+	json j = { { "status", resp.status } };
+	return createBuff(j, STARTGAME_RESP_CODE);
+}
+
 std::vector<char> JsonResponsePacketSerializer::intToBinary(unsigned int num)
 {
 	std::vector<char> ret = { '\0', '\0','\0','\0' };

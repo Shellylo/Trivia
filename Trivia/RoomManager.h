@@ -57,6 +57,13 @@ public:
 		Output: vector of rooms (exception if there is a problem)
 	*/
 	std::vector<RoomData> getRooms();
+	/*
+		Closes the room
+		Input: room and user
+		Output: none
+	*/
+	void closeRoom(Room& room, LoggedUser user);
+
 private:
 	std::map<int, Room> m_rooms;
 
