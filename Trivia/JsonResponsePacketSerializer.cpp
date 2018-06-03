@@ -54,6 +54,18 @@ std::vector<char> JsonResponsePacketSerializer::serializeResponse(HighscoreRespo
 	return createBuff(j, GETHIGHSCORES_RESP_CODE);
 }
 
+std::vector<char> JsonResponsePacketSerializer::serializeResponse(GetRoomStateResponse resp)
+{
+	json j = { { "status", resp.status }, { "roomStatus", resp.roomStatus }, { "players", resp.players }, { "questionsCount", resp.questionCount }, { "answerTimeout", resp.answerTimeout } };
+	return createBuff(j, GETROOMSTATE_RESP_CODE);
+}
+
+std::vector<char> JsonResponsePacketSerializer::serializeResponse(LeaveRoomResponse resp)
+{
+	json j = { { "status", resp.status } };
+	return createBuff(j, LEAVEROOM_RESP_CODE);
+}
+
 std::vector<char> JsonResponsePacketSerializer::intToBinary(unsigned int num)
 {
 	std::vector<char> ret = { '\0', '\0','\0','\0' };

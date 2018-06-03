@@ -23,4 +23,5 @@ private:
 
 	RequestResult leaveRoom(Request req);
 	RequestResult getRoomState(Request req);
+	RequestResult joinGame(Request req);
 };

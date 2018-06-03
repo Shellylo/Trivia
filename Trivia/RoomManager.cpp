@@ -8,7 +8,7 @@ Room& RoomManager::createRoom(LoggedUser user, CreateRoomRequest roomData)
 {
 	static int id = 0;
 	m_rooms[id] = Room(id, roomData, user);
-	//m_rooms.insert(std::pair<int, Room>(id, Room(id, roomData, user)));
+	m_rooms.insert(std::pair<int, Room>(id, Room(id, roomData, user)));
 	return m_rooms[id++];
 }
 
@@ -48,6 +48,7 @@ void RoomManager::leaveRoom(LoggedUser user, int ID)
 		throw std::exception();
 	}
 	room.removeUser(user);
+	// if room is empty remove room?
 }
 
 std::vector<std::string> RoomManager::getPlayersInRoom(int ID)
