@@ -158,7 +158,17 @@ public:
     	Output: buffer
 	*/
 	static std::vector<char> serializeResponse(HighscoreResponse resp);
+	/*
+		Serializes get close room response
+		Input: get highscores response
+		Output: buffer
+	*/
 	static std::vector<char> serializeResponse(CloseRoomResponse resp);
+	/*
+		Serializes get start game response
+		Input: get highscores response
+		Output: buffer
+	*/
 	static std::vector<char> serializeResponse(StartGameResponse resp);
 	static std::vector<char> serializeResponse(GetRoomStateResponse resp);
 	static std::vector<char> serializeResponse(LeaveRoomResponse resp);
