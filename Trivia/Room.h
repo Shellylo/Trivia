@@ -57,6 +57,15 @@ public:
 		Output: vector of LoggedUser
 	*/
 	std::vector<LoggedUser> getAllUsers() const;
+	/*
+		Sets the state of the room
+		Input: state
+		Output: none
+	*/
+	void setState(int state)
+	{
+		m_metadata.roomState = state;
+	}
 
 private:
 	RoomData m_metadata;

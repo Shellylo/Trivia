@@ -13,3 +13,13 @@ MenuRequestHandler * RequestHandlerFactory::createMenuRequestHandler(LoggedUser 
 {
 	return new MenuRequestHandler(m_roomManager, m_highscoreTable, *this, user);
 }
+
+RoomAdminRequestHandler * RequestHandlerFactory::createRoomAdminRequestHandler(Room & room, LoggedUser user)
+{
+	return new RoomAdminRequestHandler(room, user, m_roomManager, *this);
+}
+
+RoomMemberRequestHandler * RequestHandlerFactory::createRoomMemberRequestHandler(Room & room, LoggedUser user)
+{
+	return new RoomMemberRequestHandler(room, user, m_roomManager, *this);
+}

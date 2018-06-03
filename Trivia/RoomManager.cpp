@@ -71,6 +71,20 @@ std::vector<RoomData> RoomManager::getRooms()
 	return ret;
 }
 
+void RoomManager::closeRoom(Room & room, LoggedUser user)
+{
+	if (!doesUserExist(user, room)) // user doesn't exist
+	{
+		throw std::exception();
+	}
+	room.removeUser(user);
+	room.setState(CLOSED);
+	if (room.getAllUsers().empty())
+	{
+		m_rooms.erase(room.getRoomData().id);
+	}
+}
+
 Room& RoomManager::getRoom(int ID)
 {
 	std::map<int, Room>::iterator it = m_rooms.find(ID);

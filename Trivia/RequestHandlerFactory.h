@@ -30,15 +30,24 @@ public:
 
 	/*
 		Creates a MenuRequestHandler (dynamic allocation)
-		Input: none
+		Input: user
 		Output: the pointer to the object
 	*/
 	MenuRequestHandler* createMenuRequestHandler(LoggedUser user);
 	
+	/*
+		Creates a RoomAdminRequestHandler (dynamic allocation)
+		Input: room and user
+		Output: the pointer to the object
+	*/
     RoomAdminRequestHandler* createRoomAdminRequestHandler(Room& room, LoggedUser user);
+
+	/*
+		Creates a RoomMemberRequestHandler (dynamic allocation)
+		Input: room and user
+		Output: the pointer to the object
+	*/
 	RoomMemberRequestHandler* createRoomMemberRequestHandler(Room& room, LoggedUser user);
-
-
 private:
 	LoginManager m_loginManager;
 	RoomManager m_roomManager;
