@@ -1,6 +1,6 @@
 #include "RequestHandlerFactory.h"
 
-RequestHandlerFactory::RequestHandlerFactory(IDatabase & database) : m_loginManager(database), m_highscoreTable(database)
+RequestHandlerFactory::RequestHandlerFactory(IDatabase & database) : m_loginManager(database), m_highscoreTable(database), m_gameManager(database)
 {
 }
 
@@ -16,10 +16,15 @@ MenuRequestHandler * RequestHandlerFactory::createMenuRequestHandler(LoggedUser 
 
 RoomAdminRequestHandler * RequestHandlerFactory::createRoomAdminRequestHandler(Room & room, LoggedUser user)
 {
-	return new RoomAdminRequestHandler(room, user, m_roomManager, *this);
+	return new RoomAdminRequestHandler(room, user, m_roomManager, m_gameManager, *this);
 }
 
 RoomMemberRequestHandler * RequestHandlerFactory::createRoomMemberRequestHandler(Room & room, LoggedUser user)
 {
-	return new RoomMemberRequestHandler(room, user, m_roomManager, *this);
+	return new RoomMemberRequestHandler(room, user, m_roomManager, m_gameManager, *this);
+}
+
+GameRequestHandler * RequestHandlerFactory::createGameRequestHandler(Game & game, LoggedUser user)
+{
+	return new GameRequestHandler(game, user, m_gameManager, *this);
 }

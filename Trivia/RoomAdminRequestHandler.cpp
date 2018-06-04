@@ -1,6 +1,6 @@
 #include "RoomAdminRequestHandler.h"
 
-RoomAdminRequestHandler::RoomAdminRequestHandler(Room & room, LoggedUser user, RoomManager & roomManager, RequestHandlerFactory & handlerFactory) : m_room(room), m_user(user), m_roomManager(roomManager), m_handlerFactory(handlerFactory)
+RoomAdminRequestHandler::RoomAdminRequestHandler(Room & room, LoggedUser user, RoomManager & roomManager, GameManager& gameManager, RequestHandlerFactory & handlerFactory) : m_room(room), m_user(user), m_roomManager(roomManager), m_gameManager(gameManager), m_handlerFactory(handlerFactory)
 {
 }
 
@@ -44,13 +44,14 @@ RequestResult RoomAdminRequestHandler::closeRoom(Request req)
 RequestResult RoomAdminRequestHandler::startGame(Request req)
 {
 	StartGameResponse result = { 1 };
+	GameRequestHandler* grh = nullptr;
 	try
 	{
-		m_gameManager.createGame(m_room);
+		grh = m_handlerFactory.createGameRequestHandler(m_gameManager.createGame(m_user, m_room), m_user);
 	}
 	catch (...)
 	{
 		result.status = 0;
 	}
-	return result.status ? RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), m_handlerFactory.createGameRequestHandler() } : RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), nullptr };
+	return result.status ? RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), grh } : RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), nullptr };
 }
