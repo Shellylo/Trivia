@@ -1,4 +1,5 @@
-#pragma once
+#ifndef HELPER
+#define HELPER
 #include <vector>
 #include <iostream>
 #include "LoggedUser.h"
@@ -23,3 +24,5 @@ namespace Helper
 		return ret;
 	}
 }
+
+#endif

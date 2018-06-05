@@ -57,3 +57,13 @@ std::vector<PlayerResults> Game::getPlayersResults()
 	}
 	return results;
 }
+
+int Game::getId()
+{
+	return id;
+}
+
+std::map<LoggedUser, GameData> Game::getPlayers()
+{
+	return m_players;
+}

@@ -15,14 +15,6 @@ struct PlayerResults
 	unsigned int averageAnswerTime;
 };
 
-struct PlayerResults
-{
-	std::string username;
-	unsigned int correctAnswerCount;
-	unsigned int wrongAnswerCount;
-	unsigned int averageAnswerTime;
-};
-
 struct GameData
 {
 	Question currentQuestion;
@@ -35,6 +27,8 @@ struct GameData
 class Game
 {
 public:
+	Game() = default;
+
 	Game(int id, std::vector<Question> questions, std::map<LoggedUser, GameData> players);
 
 	/*
@@ -68,6 +62,10 @@ public:
 		Output: players results (for each one: the amount of correct and wrong answers and average answer time)
 	*/
 	std::vector<PlayerResults> getPlayersResults();
+
+	int getId();
+
+	std::map<LoggedUser, GameData> getPlayers();
 
 private:
 	int id;
