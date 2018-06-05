@@ -6,6 +6,7 @@
 #include "Room.h"
 #include "json.hpp"
 #include "HighscoreTable.h"
+#include "Game.h"
 
 enum respCodes
 {
@@ -122,15 +123,7 @@ struct SubmitAnswerResponse
 {
 	unsigned int status;
 	std::string correctAnswer;
-};
-
-struct PlayerResults
-{
-	unsigned int status;
-	std::string username;
-	unsigned int correctAnswerCount;
-	unsigned int wrongAnswerCount;
-	unsigned int averageAnswerTime;
+	bool hasFinished;
 };
 
 struct GetGameResultsResponse

@@ -34,7 +34,7 @@ CreateRoomRequest JsonRequestPacketDeserializer::deserializeCreateRoomRequest(st
 SubmitAnswerRequest JsonRequestPacketDeserializer::deserializeSubmitAnswerRequest(std::vector<char> req)
 {
 	json j = json::parse(req);
-	return { j["answer"], j["time"] };
+	return { j["answer"] };
 }
 
 unsigned int JsonRequestPacketDeserializer::binaryToInt(char * buff)

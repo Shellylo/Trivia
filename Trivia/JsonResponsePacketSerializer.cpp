@@ -80,7 +80,7 @@ std::vector<char> JsonResponsePacketSerializer::serializeResponse(GetQuestionRes
 
 std::vector<char> JsonResponsePacketSerializer::serializeResponse(SubmitAnswerResponse resp)
 {
-	json j = { { "status", resp.status }, { "correctAnswer", resp.correctAnswer } };
+	json j = { { "status", resp.status }, { "correctAnswer", resp.correctAnswer }, { "hasFinished", resp.hasFinished } };
 	return createBuff(j, SUBMITANSWER_RESP_CODE);
 }
 
@@ -155,7 +155,7 @@ std::vector<json> JsonResponsePacketSerializer::createJsonPlayerResultsArray(std
 	std::vector<json> jresults;
 	for (int i = 0; i < results.size(); i++)
 	{
-		jresults.push_back({ { "status", results[i].status }, { "username", results[i].username }, { "correctAnswerCount", results[i].correctAnswerCount }, { "wrongAnswerCount", results[i].wrongAnswerCount }, { "averageAnswerTime", results[i].averageAnswerTime } });
+		jresults.push_back({ { "username", results[i].username }, { "correctAnswerCount", results[i].correctAnswerCount }, { "wrongAnswerCount", results[i].wrongAnswerCount }, { "averageAnswerTime", results[i].averageAnswerTime } });
 	}
 	return jresults;
 }
