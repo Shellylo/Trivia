@@ -48,7 +48,10 @@ void RoomManager::leaveRoom(LoggedUser user, int ID)
 		throw std::exception();
 	}
 	room.removeUser(user);
-	// if room is empty remove room?
+	if (room.getAllUsers().empty())
+	{
+		m_rooms.erase(room.getRoomData().id);
+	}
 }
 
 std::vector<std::string> RoomManager::getPlayersInRoom(int ID)
@@ -74,16 +77,8 @@ std::vector<RoomData> RoomManager::getRooms()
 
 void RoomManager::closeRoom(Room & room, LoggedUser user)
 {
-	if (!doesUserExist(user, room)) // user doesn't exist
-	{
-		throw std::exception();
-	}
-	room.removeUser(user);
 	room.setState(CLOSED);
-	if (room.getAllUsers().empty())
-	{
-		m_rooms.erase(room.getRoomData().id);
-	}
+	leaveRoom(user, room.getRoomData().id);
 }
 
 Room& RoomManager::getRoom(int ID)

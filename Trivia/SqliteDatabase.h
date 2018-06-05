@@ -1,11 +1,9 @@
 #pragma once
-#include <iostream>
-#include <map>
-#include <list>
 #include "LoggedUser.h"
 #include "IDatabase.h"
 #include "sqlite3.h"
 #include <io.h>	
+#include <string>
 
 #define DB_NAME "TriviaDB.sqlite"
 #define TABLES_NUM 3
@@ -53,7 +51,19 @@ public:
 	/*
 		Comment in the pure virtual function
 	*/
-	std::vector<Question> getQuestions(int num) override { return std::vector<Question>(); };
+	std::vector<Question> getQuestions(int num) override;
+	/*
+		Comment in the pure virtual function
+	*/
+	int createGame(std::string startTime) override;
+	/*
+		Comment in the pure virtual function
+	*/
+	void finishGame(int gameId, std::string endTime) override;
+	/*
+		Comment in the pure virtual function
+	*/
+	void addAnswer(int gameId, std::string username, std::string answer, bool isCorrect, std::string time, std::string question) override;
 
 private:
 	sqlite3* db;
@@ -85,8 +95,20 @@ private:
 	static int doesExistCallback(void * data, int argc, char ** argv, char ** colName);
 	/*
 		Call back function that handles the highscore request
-		Input: void* data (must be vector<Highscore>*), argument count, arguments, column names
+		Input: void* data (must be std::vector<Highscore>*), argument count, arguments, column names
 		Output: int
 	*/
 	static int getHighscores(void * data, int argc, char ** argv, char ** colName);
+	/*
+		Call back function that returns one number (for example - ID)
+		Input: void* data (must be int*), argument count, arguments, column names
+		Output: int
+	*/
+	static int getNum(void * data, int argc, char ** argv, char ** colName);
+	/*
+		Call back function that inserts a question into vector
+		Input: void* data (must be std::vector<Question>*), argument count, arguments, column names
+		Output: int
+	*/
+	static int getQuestion(void * data, int argc, char ** argv, char ** colName);
 };

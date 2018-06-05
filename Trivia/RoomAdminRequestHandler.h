@@ -4,6 +4,7 @@
 #include "LoggedUser.h"
 #include "RoomManager.h"
 #include "RequestHandlerFactory.h"
+#include "GameManager.h"
 
 class RequestHandlerFactory;
 
@@ -13,7 +14,7 @@ public:
 	/*
 		Creates RoomAdminRequestHandler
 	*/
-	RoomAdminRequestHandler(Room& room, LoggedUser user, RoomManager& roomManager, RequestHandlerFactory& handlerFactory);
+	RoomAdminRequestHandler(Room& room, LoggedUser user, RoomManager& roomManager, GameManager& gameManager, RequestHandlerFactory& handlerFactory);
 
 	/*
 		Comment in the virtual function
@@ -28,6 +29,7 @@ private:
 	Room& m_room;
 	LoggedUser m_user;
 	RoomManager& m_roomManager;
+	GameManager& m_gameManager;
 	RequestHandlerFactory& m_handlerFactory;
 
 	RequestResult closeRoom(Request req);

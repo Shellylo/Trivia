@@ -6,6 +6,7 @@
 #include "Room.h"
 #include "json.hpp"
 #include "HighscoreTable.h"
+#include "Game.h"
 
 enum respCodes
 {
@@ -22,7 +23,11 @@ enum respCodes
 	STARTGAME_RESP_CODE,
 	GETROOMSTATE_RESP_CODE,
 	LEAVEROOM_RESP_CODE,
-	JOINGAME_RESP_CODE
+	JOINGAME_RESP_CODE,
+	GETQUESTION_RESP_CODE,
+	SUBMITANSWER_RESP_CODE,
+	GETGAMERESULTS_RESP_CODE,
+	LEAVEGAME_RESP_CODE
 };
 
 #define SIZE_LEN 4
@@ -107,6 +112,31 @@ struct JoinGameResponse
 	unsigned int status;
 };
 
+struct GetQuestionResponse
+{
+	unsigned int status;
+	std::string question;
+	std::vector<std::string> answers;
+};
+
+struct SubmitAnswerResponse
+{
+	unsigned int status;
+	std::string correctAnswer;
+	bool hasFinished;
+};
+
+struct GetGameResultsResponse
+{
+	unsigned int status;
+	std::vector<PlayerResults> results;
+};
+
+struct LeaveGameResponse
+{
+	unsigned int status;
+};
+
 class JsonResponsePacketSerializer
 {
 public:
@@ -178,6 +208,11 @@ public:
 	static std::vector<char> serializeResponse(StartGameResponse resp);
 	static std::vector<char> serializeResponse(GetRoomStateResponse resp);
 	static std::vector<char> serializeResponse(LeaveRoomResponse resp);
+	static std::vector<char> serializeResponse(JoinGameResponse resp);
+	static std::vector<char> serializeResponse(GetQuestionResponse resp);
+	static std::vector<char> serializeResponse(SubmitAnswerResponse resp);
+	static std::vector<char> serializeResponse(GetGameResultsResponse resp);
+	static std::vector<char> serializeResponse(LeaveGameResponse resp);
 
 private:
 	/*
@@ -204,4 +239,5 @@ private:
 		Output: vector of jsons
 	*/
 	static std::vector<json> createJsonHighscoresArray(std::vector<Highscore> highscores);
+	static std::vector<json> createJsonPlayerResultsArray(std::vector<PlayerResults> results);
 };

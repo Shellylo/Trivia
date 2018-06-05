@@ -66,6 +66,36 @@ std::vector<char> JsonResponsePacketSerializer::serializeResponse(LeaveRoomRespo
 	return createBuff(j, LEAVEROOM_RESP_CODE);
 }
 
+std::vector<char> JsonResponsePacketSerializer::serializeResponse(JoinGameResponse resp)
+{
+	json j = { { "status", resp.status } };
+	return createBuff(j, JOINROOM_RESP_CODE);
+}
+
+std::vector<char> JsonResponsePacketSerializer::serializeResponse(GetQuestionResponse resp)
+{
+	json j = { { "status", resp.status }, { "question", resp.question }, { "answers", resp.answers } };
+	return createBuff(j, GETQUESTION_RESP_CODE);
+}
+
+std::vector<char> JsonResponsePacketSerializer::serializeResponse(SubmitAnswerResponse resp)
+{
+	json j = { { "status", resp.status }, { "correctAnswer", resp.correctAnswer }, { "hasFinished", resp.hasFinished } };
+	return createBuff(j, SUBMITANSWER_RESP_CODE);
+}
+
+std::vector<char> JsonResponsePacketSerializer::serializeResponse(GetGameResultsResponse resp)
+{
+	json j = { { "status", resp.status }, { "results", createJsonPlayerResultsArray(resp.results) } };
+	return createBuff(j, GETGAMERESULTS_RESP_CODE);
+}
+
+std::vector<char> JsonResponsePacketSerializer::serializeResponse(LeaveGameResponse resp)
+{
+	json j = { { "status", resp.status } };
+	return createBuff(j, LEAVEGAME_RESP_CODE);
+}
+
 std::vector<char> JsonResponsePacketSerializer::serializeResponse(CloseRoomResponse resp)
 {
 	json j = { { "status", resp.status } };
@@ -115,7 +145,17 @@ std::vector<json> JsonResponsePacketSerializer::createJsonHighscoresArray(std::v
 	std::vector<json> jhighscores;
 	for (int i = 0; i < highscores.size(); i++)
 	{
-		jhighscores.push_back({ { "username", highscores[i].username },{ "score", highscores[i].score },{ "time", highscores[i].time } });
+		jhighscores.push_back({ { "username", highscores[i].username }, { "score", highscores[i].score }, { "time", highscores[i].time } });
 	}
 	return jhighscores;
+}
+
+std::vector<json> JsonResponsePacketSerializer::createJsonPlayerResultsArray(std::vector<PlayerResults> results)
+{
+	std::vector<json> jresults;
+	for (int i = 0; i < results.size(); i++)
+	{
+		jresults.push_back({ { "username", results[i].username }, { "correctAnswerCount", results[i].correctAnswerCount }, { "wrongAnswerCount", results[i].wrongAnswerCount }, { "averageAnswerTime", results[i].averageAnswerTime } });
+	}
+	return jresults;
 }

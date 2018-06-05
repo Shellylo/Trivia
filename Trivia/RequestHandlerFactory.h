@@ -1,17 +1,19 @@
 #pragma once
-//#include "RequestHandlerFactory.h"
 #include "LoginRequestHandler.h"
 #include "MenuRequestHandler.h"
 #include "RoomAdminRequestHandler.h"
 #include "RoomMemberRequestHandler.h"
+#include "GameRequestHandler.h"
 #include "loginManager.h"
 #include "RoomManager.h"
 #include "HighscoreTable.h"
+#include "GameManager.h"
 
 class LoginRequestHandler;
 class MenuRequestHandler;
 class RoomAdminRequestHandler;
 class RoomMemberRequestHandler;
+class GameRequestHandler;
 
 class RequestHandlerFactory
 {
@@ -48,8 +50,12 @@ public:
 		Output: the pointer to the object
 	*/
 	RoomMemberRequestHandler* createRoomMemberRequestHandler(Room& room, LoggedUser user);
+
+	GameRequestHandler* createGameRequestHandler(Game& game, LoggedUser user);
+
 private:
 	LoginManager m_loginManager;
 	RoomManager m_roomManager;
 	HighscoreTable m_highscoreTable;
+	GameManager m_gameManager;
 };

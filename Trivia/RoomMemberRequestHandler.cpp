@@ -1,6 +1,6 @@
 #include "RoomMemberRequestHandler.h"
 
-RoomMemberRequestHandler::RoomMemberRequestHandler(Room & room, LoggedUser user, RoomManager & roomManager, RequestHandlerFactory & handlerFactory) : m_room(room), m_user(user), m_roomManager(roomManager), m_handlerFactory(handlerFactory)
+RoomMemberRequestHandler::RoomMemberRequestHandler(Room & room, LoggedUser user, RoomManager & roomManager, GameManager& gameManager, RequestHandlerFactory & handlerFactory) : m_room(room), m_user(user), m_roomManager(roomManager), m_gameManager(gameManager), m_handlerFactory(handlerFactory)
 {
 }
 
@@ -57,4 +57,19 @@ RequestResult RoomMemberRequestHandler::getRoomState(Request req)
 		result.status = 0;
 	}
 	return result.status ? RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), m_handlerFactory.createMenuRequestHandler(m_user) } : RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), nullptr };
+}
+
+RequestResult RoomMemberRequestHandler::joinGame(Request req)
+{
+	JoinGameResponse result = { 1 };
+	GameRequestHandler* grh = nullptr;
+	try
+	{
+		grh = m_handlerFactory.createGameRequestHandler(m_gameManager.joinGame(m_user, m_room.getRoomData().id), m_user);
+	}
+	catch (...)
+	{
+		result.status = 0;
+	}
+	return result.status ? RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), grh } : RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), nullptr };
 }
