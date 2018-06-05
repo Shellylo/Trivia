@@ -64,4 +64,22 @@ public:
 	*/
 	virtual std::vector<Highscore> getHighscores(std::string username) = 0;
 	//virtual std::map<LoggedUser, int> getHighscores() = 0; //why??
+	/*
+		Adds new game into database
+		Input: game start time
+		Output: inserted game ID
+	*/
+	virtual int createGame(std::string startTime) = 0;
+	/*
+		Adds game end time into database and updates game status
+		Input: game ID, game end time
+		Output: none
+	*/
+	virtual void finishGame(int gameId, std::string endTime) = 0; // change status to 0
+	/*
+		Adds new player answer into database
+		Input: game ID, username, the answer, answer is correct or not, time answered (length), the question
+		Output: none
+	*/
+	virtual void addAnswer(int gameId, std::string username, std::string answer, bool isCorrect, std::string time, std::string question) = 0;
 };

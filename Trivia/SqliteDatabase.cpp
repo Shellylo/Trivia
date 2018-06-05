@@ -63,6 +63,33 @@ bool SqliteDatabase::passMatches(std::string username, std::string pass)
 	return match;
 }
 
+std::vector<Question> SqliteDatabase::getQuestions(int num)
+{
+	std::vector<Question> questions;
+	sendStatement("SELECT * FROM QUESTIONS LIMIT " + std::to_string(num), getQuestion, &questions);
+	return questions;
+}
+
+int SqliteDatabase::createGame(std::string startTime)
+{
+	int gameId = -1;
+	sendStatement("INSERT INTO GAMES (STATUS, START_TIME) VALUES (1, \"" + startTime + "\");"); // adds game
+	sendStatement("SELECT GAME_ID FROM GAMES ORDER BY GAME_ID DESC LIMIT 1", getNum, &gameId); // gets last game ID
+	return gameId;
+}
+
+void SqliteDatabase::finishGame(int gameId, std::string endTime)
+{
+	sendStatement("UPDATE GAMES SET STATUS = 0, END_TIME = \"" + endTime + "\" WHERE GAME_ID = " + std::to_string(gameId) + ";");
+}
+
+void SqliteDatabase::addAnswer(int gameId, std::string username, std::string answer, bool isCorrect, std::string time, std::string question)
+{
+	sendStatement("INSERT INTO ANSWERS (GAME_ID, USERNAME, QUESTION_ID, PLAYER_ANSWER, IS_CORRECT, ANSWER_TIME) VALUES (" +
+				  std::to_string(gameId) + ", " + username + ", (SELECT QUESTION_ID FROM QUESTIONS WHERE QUESTION = \"" +
+				  question + "\";), \"" + answer + "\", " + std::to_string(isCorrect) + ", \"" + time + "\");");
+}
+
 bool SqliteDatabase::initDB()
 {
 	bool ret = true;
@@ -70,7 +97,7 @@ bool SqliteDatabase::initDB()
 	//check DATETIME?
 	char* statements[] = { "CREATE TABLE USERS (USERNAME TEXT PRIMARY KEY NOT NULL, PASSWORD TEXT NOT NULL, EMAIL TEXT NOT NULL);",
 						   "CREATE TABLE QUESTIONS (QUESTION_ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, QUESTION TEXT NOT NULL, CORRECT_ANS TEXT NOT NULL, ANS2 TEXT NOT NULL, ANS3 TEXT NOT NULL, ANS4 TEXT NOT NULL);",
-						   "CREATE TABLE GAMES (GAME_ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, STATUS INTEGER NOT NULL , START_TIME TEXT NOT NULL, END_TIME TEXT NOT NULL);",
+						   "CREATE TABLE GAMES (GAME_ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, STATUS INTEGER NOT NULL , START_TIME TEXT NOT NULL, END_TIME TEXT);",
 						   "CREATE TABLE ANSWERS (ANSWER_ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, GAME_ID INTEGER NOT NULL, USERNAME TEXT NOT NULL, QUESTION_ID INTEGER NOT NULL, PLAYER_ANSWER TEXT NOT NULL, IS_CORRECT INTEGER NOT NULL, ANSWER_TIME INTEGER NOT NULL, FOREIGN_KEY(GAME_ID));" };
 	for (int i = 0; i < TABLES_NUM && ret; i++)
 	{
@@ -118,5 +145,35 @@ int SqliteDatabase::getHighscores(void * data, int argc, char ** argv, char ** c
 		}
 	}
 	((std::vector<Highscore>*)data)->push_back(highscore);
+	return 0;
+}
+
+int SqliteDatabase::getNum(void * data, int argc, char ** argv, char ** colName)
+{
+	*((int*)data) = std::stoi(argv[0]);
+	return 0;
+}
+
+int SqliteDatabase::getQuestion(void * data, int argc, char ** argv, char ** colName)
+{
+	Question question("", "", std::vector<std::string>());
+	std::vector<std::string> anss;
+	for (int i = 0; i < argc; i++)
+	{
+		if (std::string(colName[i]) == "QUESTION")
+		{
+			question.setQs(argv[i]);
+		}
+		else if (std::string(colName[i]) == "CORRECT_ANS")
+		{
+			question.setCorrectAns(argv[i]);
+		}
+		else if (std::string(colName[i]) == "ANS2" || std::string(colName[i]) == "ANS3" || std::string(colName[i]) == "ANS4")
+		{
+			anss.push_back(argv[i]);
+		}
+	}
+	question.setAnswers(anss);
+	((std::vector<Question>*)data)->push_back(question);
 	return 0;
 }
