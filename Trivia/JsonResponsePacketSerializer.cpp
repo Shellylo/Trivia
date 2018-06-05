@@ -80,7 +80,7 @@ std::vector<char> JsonResponsePacketSerializer::serializeResponse(GetQuestionRes
 
 std::vector<char> JsonResponsePacketSerializer::serializeResponse(SubmitAnswerResponse resp)
 {
-	json j = { { "status", resp.status }, { "correctAnswer", resp.correctAnswer } };
+	json j = { { "status", resp.status }, { "correctAnswer", resp.correctAnswer }, {"hasFinished", resp.hasFinished} };
 	return createBuff(j, SUBMITANSWER_RESP_CODE);
 }
 
