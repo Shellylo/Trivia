@@ -29,3 +29,66 @@ RequestResult GameRequestHandler::handleRequest(Request req)
 	}
 	return reqRes;
 }
+
+RequestResult GameRequestHandler::getQuestion(Request req)
+{
+	GetQuestionResponse result = { 1 , "", std::vector<std::string>() };
+	try
+	{
+		Question qs = m_game.getQuestionForUser(m_user);
+		result.question = qs.getQs();
+		result.answers = qs.getAnss();
+	}
+	catch (...)
+	{
+		result.status = 0;
+	}
+	return result.status ? RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), this } : RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), nullptr };
+}
+
+RequestResult GameRequestHandler::submitAnswer(Request req)
+{
+	SubmitAnswerRequest request = JsonRequestPacketDeserializer::deserializeSubmitAnswerRequest(req.buffer);
+	SubmitAnswerResponse result = { 1 , "", false };
+	try
+	{
+		m_gameManager.submitAnswer(m_user, m_game, request.answer);
+		result.hasFinished = m_game.getQuestionForUser(m_user).getQs() == "";
+	}
+	catch (...)
+	{
+		result.status = 0;
+	}
+	return result.status ? RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), this } : RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), nullptr };
+}
+
+RequestResult GameRequestHandler::getGameResults(Request req)
+{
+	GetGameResultsResponse result = { 1 , std::vector<PlayerResults>() };
+	try
+	{
+		result.results = m_game.getPlayersResults();
+	}
+	catch (...)
+	{
+		result.status = 0;
+	}
+	return result.status ? RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), this } : RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), nullptr };
+}
+
+RequestResult GameRequestHandler::leaveGame(Request req)
+{
+	LeaveGameResponse result = { 1 };
+	try
+	{
+		if (m_game.removePlayer(m_user))
+		{
+			m_gameManager.deleteGame(m_game);
+		}
+	}
+	catch (...)
+	{
+		result.status = 0;
+	}
+	return result.status ? RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), m_handlerFactory.createMenuRequestHandler(m_user) } : RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), nullptr };
+}

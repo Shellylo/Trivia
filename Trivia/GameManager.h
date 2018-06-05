@@ -4,6 +4,7 @@
 #include "IDatabase.h"
 #include "Room.h"
 #include "Game.h"
+#include <time.h>
 
 class GameManager
 {
