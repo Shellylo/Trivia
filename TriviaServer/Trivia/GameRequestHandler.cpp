@@ -38,6 +38,7 @@ RequestResult GameRequestHandler::getQuestion(Request req)
 		Question qs = m_game.getQuestionForUser(m_user);
 		result.question = qs.getQs();
 		result.answers = qs.getAnss();
+		result.answers.push_back(qs.getCorrectAns());
 	}
 	catch (...)
 	{
