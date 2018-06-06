@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace TriviaClient
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for SignupWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class SignupWindow : Window
     {
-        public MainWindow()
+        public SignupWindow()
         {
             InitializeComponent();
         }
@@ -44,18 +43,25 @@ namespace TriviaClient
             }
         }
 
-        private void Login_Click(object sender, RoutedEventArgs e)
+        public void Email_Down(object sender, MouseEventArgs e)
         {
-            MenuWindow mw = new MenuWindow();
-            this.Close();
-            mw.Show();
+            if (this.Email.Foreground == Brushes.LightGray)
+            {
+                this.Email.Text = "";
+                this.Email.Foreground = Brushes.Black;
+            }
         }
 
         private void Signup_Click(object sender, RoutedEventArgs e)
         {
-            SignupWindow sw = new SignupWindow();
+
+        }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mw = new MainWindow();
             this.Close();
-            sw.Show();
+            mw.Show();
         }
     }
 }
