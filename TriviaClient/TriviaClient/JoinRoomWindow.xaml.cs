@@ -23,10 +23,10 @@ namespace TriviaClient
         {
             InitializeComponent();
             // get rooms from server
-            addRoomsToList();
+            UpdateRoomsToList();
         }
 
-        private void addRoomsToList()
+        private void UpdateRoomsToList()
         {
             // this.RoomsList.Items.Add()
         }
@@ -41,6 +41,16 @@ namespace TriviaClient
             MenuWindow mw = new MenuWindow();
             this.Close();
             mw.Show();
+        }
+
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateRoomsToList();
+        }
+
+        private void Details_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
