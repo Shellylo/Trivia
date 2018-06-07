@@ -65,6 +65,7 @@
       <DependentUpon>JoinRoomWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="JsonRequestPacketDeserializer.cs" />
+    <Compile Include="JsonRequestPacketSerializer.cs" />
     <Compile Include="MenuWindow.xaml.cs">
       <DependentUpon>MenuWindow.xaml</DependentUpon>
     </Compile>

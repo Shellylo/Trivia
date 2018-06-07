@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TriviaClient
 {
-    class JsonRequestPacketDeserializer
+    class JsonResponsePacketDeserializer
     {
         enum respCodes : uint
         {
