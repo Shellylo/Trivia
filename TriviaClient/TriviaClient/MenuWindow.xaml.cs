@@ -33,7 +33,9 @@ namespace TriviaClient
 
         private void CreateRoom_Click(object sender, RoutedEventArgs e)
         {
-
+            CreateRoomWindow crw = new CreateRoomWindow();
+            this.Close();
+            crw.Show();
         }
 
         private void Highscores_Click(object sender, RoutedEventArgs e)
