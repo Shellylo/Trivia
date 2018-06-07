@@ -3,117 +3,135 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace TriviaClient
 {
     class JsonRequestPacketDeserializer
     {
-        enum reqCodes : uint
+        enum respCodes : uint
         {
-            LOGIN_REQ_CODE = 1,
-            SIGNUP_REQ_CODE,
-            LOGOUT_REQ_CODE,
-            GETROOMS_REQ_CODE,
-            GETPLAYERSROOM_REQ_CODE,
-            JOINROOM_REQ_CODE,
-            CREATEROOM_REQ_CODE,
-            GETHIGHSCORES_REQ_CODE,
-            CLOSEROOM_REQ_CODE,
-            STARTGAME_REQ_CODE,
-            GETROOMSTATE_REQ_CODE,
-            LEAVEROOM_REQ_CODE,
-            JOINGAME_REQ_CODE,
-            GETQUESTION_REQ_CODE,
-            SUBMITANSWER_REQ_CODE,
-            GETGAMERESULTS_REQ_CODE,
-            LEAVEGAME_REQ_CODE
+            LOGIN_RESP_CODE = 1,
+            SIGNUP_RESP_CODE,
+            LOGOUT_RESP_CODE,
+            GETROOMS_RESP_CODE,
+            GETPLAYERSROOM_RESP_CODE,
+            JOINROOM_RESP_CODE,
+            CREATEROOM_RESP_CODE,
+            GETHIGHSCORES_RESP_CODE,
+            CLOSEROOM_RESP_CODE,
+            STARTGAME_RESP_CODE,
+            GETROOMSTATE_RESP_CODE,
+            LEAVEROOM_RESP_CODE,
+            JOINGAME_RESP_CODE,
+            GETQUESTION_RESP_CODE,
+            SUBMITANSWER_RESP_CODE,
+            GETGAMERESULTS_RESP_CODE,
+            LEAVEGAME_RESP_CODE
         };
 
-        public struct LoginRequest
+        public struct LoginResponse
         {
-            public string username;
-            public string password;
-
-            public LoginRequest(string user, string pass, string email)
-            {
-                this.username = user;
-                this.password = pass;
-            }
+            public uint status;
         };
 
-        public struct SignupRequest
+        public struct SignupResponse
         {
-            public string username;
-            public string password;
-            public string email;
-
-            public SignupRequest(string user, string pass, string email)
-            {
-                this.username = user;
-                this.password = pass;
-                this.email = email;
-            }
+            public uint status;
         };
 
-        public struct GetPlayersInRoomRequest
+        public struct LogoutResponse
         {
-            public uint roomId;
-
-            public GetPlayersInRoomRequest(uint id)
-            {
-                this.roomId = id;
-            }
+            public uint status;
         };
 
-        public struct JoinRoomRequest
+        public struct GetRoomsResponse
         {
-            public uint roomId;
-
-            public JoinRoomRequest(uint id)
-            {
-                this.roomId = id;
-            }
+            public uint status;
+            public std::vector<RoomData> rooms;
         };
 
-        public struct CreateRoomRequest
+        public struct GetPlayersInRoomResponse
         {
-            public string name;
-            public uint maxPlayers;
+            public uint status;
+            public std::vector<string> users;
+        };
+
+        public struct JoinRoomResponse
+        {
+            public uint status;
+        };
+
+        public struct CreateRoomResponse
+        {
+            public uint status;
+        };
+
+        public struct HighscoreResponse
+        {
+            public uint status;
+            public std::vector<Highscore> highscores;
+        };
+
+        public struct CloseRoomResponse
+        {
+            public uint status;
+        };
+
+        public struct StartGameResponse
+        {
+            public uint status;
+        };
+
+        public struct GetRoomStateResponse
+        {
+            public uint status;
+            public uint roomStatus;
+            public std::vector<string> players;
             public uint questionCount;
             public uint answerTimeout;
-
-            public CreateRoomRequest(string name, uint maxPlayers, uint questionCount, uint answerTimeout)
-            {
-                this.name = name;
-                this.maxPlayers = maxPlayers;
-                this.questionCount = questionCount;
-                this.answerTimeout = answerTimeout;
-            }
         };
 
-        public struct SubmitAnswerRequest
+        public struct LeaveRoomResponse
         {
-            public string answer;
-
-            public SubmitAnswerRequest(string answer)
-            {
-                this.answer = answer;
-            }
+            public uint status;
         };
 
-        public static byte[] createBuff(uint code)
+        public struct JoinGameResponse
         {
-            byte[] lengthBuffFinal = { 0, 0, 0, 0 };
-            return BitConverter.GetBytes(code).Concat(lengthBuffFinal).ToArray();
-        }
+            public uint status;
+        };
 
-        public static byte[] createBuff(Object req, uint code)
+        public struct GetQuestionResponse
         {
-            string json = JsonConvert.SerializeObject(req);
-            byte[] lengthBuff = BitConverter.GetBytes(json.Length);
-            byte[] lengthBuffFinal = new byte[4 - lengthBuff.Length].Concat(lengthBuff).ToArray();
-            return BitConverter.GetBytes(code).Concat(lengthBuffFinal).Concat(new ASCIIEncoding().GetBytes(json)).ToArray();
-        }
+            public uint status;
+            public string question;
+            public std::vector<string> answers;
+        };
+
+        public struct SubmitAnswerResponse
+        {
+            public uint status;
+            public string correctAnswer;
+            public bool hasFinished;
+        };
+
+        public struct GetGameResultsResponse
+        {
+            public uint status;
+            public std::vector<PlayerResults> results;
+        };
+
+        public struct LeaveGameResponse
+        {
+            uint status;
+        };
+
+        public struct PlayerResults
+        {
+            string username;
+            uint correctAnswerCount;
+            uint wrongAnswerCount;
+            uint averageAnswerTime;
+        };
     }
 }
