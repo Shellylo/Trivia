@@ -28,11 +28,16 @@ int RoomManager::getRoomState(int ID)
 Room& RoomManager::joinRoom(LoggedUser user, int ID)
 {
 	Room& room = getRoom(ID);
-	if (room.getRoomData().roomState != WAITING)
+	RoomData roomData = room.getRoomData();
+	if (roomData.roomState != WAITING)
 	{
 		throw std::exception();
 	}
 	if (doesUserExist(user, room)) // user already exists
+	{
+		throw std::exception();
+	}
+	if (roomData.maxPlayers >= room.getAllUsers().size()) // room is full
 	{
 		throw std::exception();
 	}

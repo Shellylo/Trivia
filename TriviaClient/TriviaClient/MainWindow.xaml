@@ -1,0 +1,31 @@
+﻿<Window x:Class="TriviaClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TriviaClient"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid Name="Gr">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="1.75*"/>
+            <RowDefinition Height="1.75*"/>
+            <RowDefinition Height="1.75*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Column="1" Grid.ColumnSpan="3" FontSize="90" Text="TRIVIA" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Crimson"/>
+        <TextBox Name="Username" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Height="30" Width="225" Text="Username" FontSize="20" Foreground="LightGray" PreviewMouseDown="Username_Down"/>
+        <TextBox Name="Password" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2" Height="30" Width="225" FontSize="20" Text="Password" Foreground="LightGray" PreviewMouseDown="Password_Down"/>
+        <PasswordBox Name="PasswordBox" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2" Height="30" Width="225" FontSize="20" Visibility="Hidden"/>
+        <Button Name="Signup" Grid.Column="1" Grid.Row="3" Width="110" HorizontalAlignment="Right" Content="Signup" FontSize="20" Foreground="Crimson" BorderThickness="0" Click="Signup_Click"/>
+        <Button Name="Login" Grid.Column="3" Grid.Row="3" Width="110" HorizontalAlignment="Left" Content="Login" FontSize="20" Foreground="Crimson" BorderThickness="0" Click="Login_Click"/>
+    </Grid>
+</Window>

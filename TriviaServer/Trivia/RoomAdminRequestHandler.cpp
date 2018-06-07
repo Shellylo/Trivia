@@ -20,9 +20,9 @@ RequestResult RoomAdminRequestHandler::handleRequest(Request req)
 	case STARTGAME_REQ_CODE:
 		reqRes = startGame(req);
 		break;
-	case GETROOMSTATE_REQ_CODE:
-		reqRes = getRoomState(req);
-		break;
+	//case GETROOMSTATE_REQ_CODE:
+	//	reqRes = getRoomState(req);
+	//	break;
 	}
 	return reqRes;
 }
