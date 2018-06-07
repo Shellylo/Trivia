@@ -41,5 +41,33 @@ namespace TriviaClient
             client.Connect(serverEndPoint);
             this.clientStream = client.GetStream();
         }
+
+        public T SendAndReceive<T>(Object req, uint code)
+        {
+            byte[] send;
+            if(req != null)
+            {
+                send = JsonRequestPacketSerializer.createBuff(req, code);
+            }
+            else
+            {
+                send = JsonRequestPacketSerializer.createBuff(code);
+            }
+            this.clientStream.Write(send, 0, send.Length);
+            byte[] recvCodeBuff = new byte[1];
+            byte[] recvLengthBuff = new byte[4];
+            this.clientStream.Read(recvCodeBuff, 0, 1);
+            this.clientStream.Read(recvLengthBuff, 0, 4);
+            uint recvCode = BitConverter.ToUInt32(recvCodeBuff, 0);
+            uint recvLength = BitConverter.ToUInt32(recvLengthBuff, 0);
+            if(recvCode != code)
+            {
+                this.clientStream.Flush();
+                throw new Exception();
+            }
+            byte[] recvDataBuff = new byte[recvLength];
+            this.clientStream.Read(recvDataBuff, 0, (int)recvLength);
+            return JsonResponsePacketDeserializer.createStruct<T>(recvDataBuff);            
+        }
     }
 }
