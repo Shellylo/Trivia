@@ -21,9 +21,18 @@ namespace TriviaClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Client client;
+
         public MainWindow()
         {
             InitializeComponent();
+            client = new Client();
+        }
+
+        public MainWindow(Client client)
+        {
+            InitializeComponent();
+            this.client = new Client(client);
         }
 
         private void Username_Down(object sender, MouseEventArgs e)
@@ -54,7 +63,7 @@ namespace TriviaClient
 
         private void Signup_Click(object sender, RoutedEventArgs e)
         {
-            SignupWindow sw = new SignupWindow();
+            SignupWindow sw = new SignupWindow(client);
             this.Close();
             sw.Show();
         }

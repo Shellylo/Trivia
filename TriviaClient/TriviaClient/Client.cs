@@ -20,7 +20,7 @@ using System.Net;
 
 namespace TriviaClient
 {
-    class Client
+    public class Client
     {
         private NetworkStream clientStream;
 
