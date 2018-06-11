@@ -27,5 +27,6 @@
         <PasswordBox Name="PasswordBox" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2" Height="30" Width="225" FontSize="20" Visibility="Hidden"/>
         <Button Name="Signup" Grid.Column="1" Grid.Row="3" Width="110" HorizontalAlignment="Right" Content="Signup" FontSize="20" Foreground="Crimson" BorderThickness="0" Click="Signup_Click"/>
         <Button Name="Login" Grid.Column="3" Grid.Row="3" Width="110" HorizontalAlignment="Left" Content="Login" FontSize="20" Foreground="Crimson" BorderThickness="0" Click="Login_Click"/>
+        <TextBlock Name="LoginError" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Incorrect username/password, please try again" FontSize="11" Foreground="Crimson" Margin="0,0,0,30" Visibility="Hidden"/>
     </Grid>
 </Window>

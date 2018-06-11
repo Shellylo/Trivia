@@ -19,9 +19,12 @@ namespace TriviaClient
     /// </summary>
     public partial class MenuWindow : Window
     {
-        public MenuWindow()
+        private Client client;
+
+        public MenuWindow(Client client)
         {
             InitializeComponent();
+            this.client = new Client(client);
         }
 
         private void JoinRoom_Click(object sender, RoutedEventArgs e)
@@ -45,7 +48,24 @@ namespace TriviaClient
 
         private void Signout_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                JsonResponsePacketDeserializer.LogoutResponse logoutResp = this.client.SendAndReceive<JsonResponsePacketDeserializer.LogoutResponse>(null, (uint)JsonRequestPacketSerializer.reqCodes.LOGOUT_REQ_CODE);
+                if (logoutResp.status == 1)
+                {
+                    MainWindow mw = new MainWindow(this.client);
+                    this.Close();
+                    mw.Show();
+                }
+                else
+                {
 
+                }
+            }
+            catch (Exception exception)
+            {
+
+            }
         }
     }
 }

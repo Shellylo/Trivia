@@ -93,7 +93,10 @@ void Communicator::clientHandler(SOCKET socket)
 		recv(socket, &info[0], INFO_LEN, 0);
 		int size = JsonRequestPacketDeserializer::binaryToInt(&info[1]);
 		std::vector<char> data(size);
-		recv(socket, &data[0], size, 0);
+		if (size)
+		{
+			recv(socket, &data[0], size, 0);
+		}
 		Request req = { info[0], size, data };
 		rq.push(std::pair<SOCKET, Request>(socket, req));
 		cv.notify_one();
