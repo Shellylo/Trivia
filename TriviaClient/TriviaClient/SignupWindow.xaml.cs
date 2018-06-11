@@ -19,9 +19,12 @@ namespace TriviaClient
     /// </summary>
     public partial class SignupWindow : Window
     {
-        public SignupWindow()
+        public Client client;
+
+        public SignupWindow(Client client)
         {
             InitializeComponent();
+            this.client = new Client(client);
         }
 
         private void Username_Down(object sender, MouseEventArgs e)
@@ -54,7 +57,25 @@ namespace TriviaClient
 
         private void Signup_Click(object sender, RoutedEventArgs e)
         {
-
+            JsonRequestPacketSerializer.SignupRequest signupReq = new JsonRequestPacketSerializer.SignupRequest(this.Username.Text, this.Password.Text, this.Email.Text);
+            try
+            {
+                JsonResponsePacketDeserializer.SignupResponse signupResp = this.client.SendAndReceive<JsonResponsePacketDeserializer.SignupResponse>(signupReq, (uint)JsonRequestPacketSerializer.reqCodes.SIGNUP_REQ_CODE);
+                if (signupResp.status == 1)
+                {
+                    MainWindow mw = new MainWindow();
+                    this.Close();
+                    mw.Show();
+                }
+                else
+                {
+                
+                }
+            }
+            catch (Exception exception)
+            {
+                
+            }
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
