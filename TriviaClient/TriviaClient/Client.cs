@@ -20,7 +20,7 @@ using System.Net;
 
 namespace TriviaClient
 {
-    class Client
+    public class Client
     {
         private NetworkStream clientStream;
 
@@ -53,17 +53,18 @@ namespace TriviaClient
             {
                 send = JsonRequestPacketSerializer.createBuff(code);
             }
+            //Console.WriteLine(new ASCIIEncoding().GetString(send).Length);
             this.clientStream.Write(send, 0, send.Length);
             byte[] recvCodeBuff = new byte[1];
             byte[] recvLengthBuff = new byte[4];
             this.clientStream.Read(recvCodeBuff, 0, 1);
-            this.clientStream.Read(recvLengthBuff, 0, 4);
-            uint recvCode = BitConverter.ToUInt32(recvCodeBuff, 0);
+            this.clientStream.Read(recvLengthBuff, 0, 4);   
+            uint recvCode = Convert.ToUInt32(recvCodeBuff[0]); ;
             uint recvLength = BitConverter.ToUInt32(recvLengthBuff, 0);
             if(recvCode != code)
             {
                 this.clientStream.Flush();
-                throw new Exception();
+                throw new Exception("Request is not relevant");
             }
             byte[] recvDataBuff = new byte[recvLength];
             this.clientStream.Read(recvDataBuff, 0, (int)recvLength);

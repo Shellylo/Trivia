@@ -44,7 +44,6 @@ struct SubmitAnswerRequest
 	std::string answer;
 };
 
-
 class JsonRequestPacketDeserializer
 {
 public:

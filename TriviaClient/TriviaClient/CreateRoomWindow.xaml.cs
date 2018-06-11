@@ -19,6 +19,8 @@ namespace TriviaClient
     /// </summary>
     public partial class CreateRoomWindow : Window
     {
+        public Client client;
+
         public CreateRoomWindow()
         {
             InitializeComponent();
@@ -26,12 +28,32 @@ namespace TriviaClient
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            MenuWindow mw = new MenuWindow();
+            MenuWindow mw = new MenuWindow(client);
             this.Close();
             mw.Show();
         }
 
         private void Create_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void NameBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void MaxPlayersBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void QuestionCountBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void QuestionTimeBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }

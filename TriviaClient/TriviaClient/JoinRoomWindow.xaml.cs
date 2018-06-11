@@ -19,6 +19,8 @@ namespace TriviaClient
     /// </summary>
     public partial class JoinRoomWindow : Window
     {
+        public Client client;
+
         public JoinRoomWindow()
         {
             InitializeComponent();
@@ -38,7 +40,7 @@ namespace TriviaClient
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            MenuWindow mw = new MenuWindow();
+            MenuWindow mw = new MenuWindow(client);
             this.Close();
             mw.Show();
         }

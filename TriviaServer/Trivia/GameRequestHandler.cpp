@@ -37,8 +37,15 @@ RequestResult GameRequestHandler::getQuestion(Request req)
 	{
 		Question qs = m_game.getQuestionForUser(m_user);
 		result.question = qs.getQs();
-		result.answers = qs.getAnss();
-		result.answers.push_back(qs.getCorrectAns());
+		std::vector<std::string> answers = qs.getAnss();
+		answers.push_back(qs.getCorrectAns());
+		int size = answers.size();
+		srand(time(NULL));
+		int index = rand() % size;
+		std::string temp = answers[index];
+		answers[index] = answers[size - 1];
+		answers[size - 1] = temp;
+		result.answers = answers;
 	}
 	catch (...)
 	{

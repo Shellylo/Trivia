@@ -35,7 +35,7 @@ namespace TriviaClient
             public string username;
             public string password;
 
-            public LoginRequest(string user, string pass, string email)
+            public LoginRequest(string user, string pass)
             {
                 this.username = user;
                 this.password = pass;
@@ -104,16 +104,17 @@ namespace TriviaClient
 
         public static byte[] createBuff(uint code)
         {
-            byte[] lengthBuffFinal = { 0, 0, 0, 0 };
-            return BitConverter.GetBytes(code).Concat(lengthBuffFinal).ToArray();
+            byte[] lengthBuff = { 0, 0, 0, 0 };
+            byte[] codeBuff = { Convert.ToByte((char)code) };
+            return codeBuff.Concat(lengthBuff).ToArray();
         }
 
         public static byte[] createBuff(Object req, uint code)
         {
             string json = JsonConvert.SerializeObject(req);
             byte[] lengthBuff = BitConverter.GetBytes(json.Length);
-            byte[] lengthBuffFinal = new byte[4 - lengthBuff.Length].Concat(lengthBuff).ToArray();
-            return BitConverter.GetBytes(code).Concat(lengthBuffFinal).Concat(new ASCIIEncoding().GetBytes(json)).ToArray();
+            byte[] codeBuff = { Convert.ToByte((char)code) };
+            return codeBuff.Concat(lengthBuff).Concat(new ASCIIEncoding().GetBytes(json)).ToArray();
         }
     }
 }

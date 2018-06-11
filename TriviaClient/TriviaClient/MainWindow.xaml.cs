@@ -21,9 +21,18 @@ namespace TriviaClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Client client;
+
         public MainWindow()
         {
             InitializeComponent();
+            this.client = new Client();
+        }
+
+        public MainWindow(Client client)
+        {
+            InitializeComponent();
+            this.client = new Client(client);
         }
 
         private void Username_Down(object sender, MouseEventArgs e)
@@ -47,9 +56,25 @@ namespace TriviaClient
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            MenuWindow mw = new MenuWindow();
-            this.Close();
-            mw.Show();
+            JsonRequestPacketSerializer.LoginRequest loginReq = new JsonRequestPacketSerializer.LoginRequest(this.Username.Text, this.PasswordBox.Password);
+            try
+            {
+                JsonResponsePacketDeserializer.LoginResponse loginResp = this.client.SendAndReceive<JsonResponsePacketDeserializer.LoginResponse>(loginReq, (uint)JsonRequestPacketSerializer.reqCodes.LOGIN_REQ_CODE);
+                if (loginResp.status == 1)
+                {
+                    MenuWindow mw = new MenuWindow(this.client);
+                    this.Close();
+                    mw.Show();
+                }
+                else
+                {
+                    LoginError.Visibility = Visibility.Visible;
+                }
+            }
+            catch(Exception exception)
+            {
+
+            }
         }
 
         private void Signup_Click(object sender, RoutedEventArgs e)
