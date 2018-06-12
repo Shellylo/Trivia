@@ -57,19 +57,19 @@ namespace TriviaClient
 
         private void Signup_Click(object sender, RoutedEventArgs e)
         {
-            JsonRequestPacketSerializer.SignupRequest signupReq = new JsonRequestPacketSerializer.SignupRequest(this.Username.Text, this.Password.Text, this.Email.Text);
+            JsonRequestPacketSerializer.SignupRequest signupReq = new JsonRequestPacketSerializer.SignupRequest(this.Username.Text, this.PasswordBox.Password, this.Email.Text);
             try
             {
                 JsonResponsePacketDeserializer.SignupResponse signupResp = this.client.SendAndReceive<JsonResponsePacketDeserializer.SignupResponse>(signupReq, (uint)JsonRequestPacketSerializer.reqCodes.SIGNUP_REQ_CODE);
                 if (signupResp.status == 1)
                 {
-                    MainWindow mw = new MainWindow();
+                    MainWindow mw = new MainWindow(this.client);
                     this.Close();
                     mw.Show();
                 }
                 else
                 {
-                
+                    this.SignupError.Visibility = Visibility.Visible;
                 }
             }
             catch (Exception exception)

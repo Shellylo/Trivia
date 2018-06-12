@@ -28,5 +28,6 @@
         <TextBox Name="Email" Grid.Column="1" Grid.Row="4" Height="30" Width="225" Text="Email" FontSize="20" Foreground="LightGray" PreviewMouseDown="Email_Down"/>
         <Button Name="Signup" Grid.Column="1" Grid.Row="5" Width="225" Content="Signup" FontSize="20" Foreground="Crimson" BorderThickness="0" Click="Signup_Click"/>
         <Button Name="Back" Grid.Row="6" Width="80" Height="30" Content="Back" FontSize="15" Foreground="Crimson" BorderThickness="0" Click="Back_Click"/>
+        <TextBlock Name="SignupError" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Singup failed, please try again" Foreground="Crimson" FontSize="11" Visibility="Hidden"/>
     </Grid>
 </Window>

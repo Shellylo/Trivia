@@ -57,11 +57,12 @@ void Communicator::handleRequests()
 		}
 		std::pair<SOCKET, Request> sock_req = rq.front();
 		rq.pop();
+		std::cout << rq.size() << std::endl;
 		std::vector<char> ans = JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Irrelevant request" });
 		if (m_clients[sock_req.first]->isRequestRelevant(sock_req.second))
 		{
 			RequestResult resp = m_clients[sock_req.first]->handleRequest(sock_req.second);
-			if (resp.newHandler)
+			if (resp.newHandler && resp.newHandler != m_clients[sock_req.first])
 			{
 				delete m_clients[sock_req.first];
 				m_clients[sock_req.first] = resp.newHandler;

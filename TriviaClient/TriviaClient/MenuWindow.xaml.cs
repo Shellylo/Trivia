@@ -43,7 +43,9 @@ namespace TriviaClient
 
         private void Highscores_Click(object sender, RoutedEventArgs e)
         {
-
+            HighscoresWindow hw = new HighscoresWindow(this.client);
+            this.Close();
+            hw.Show();
         }
 
         private void Signout_Click(object sender, RoutedEventArgs e)
