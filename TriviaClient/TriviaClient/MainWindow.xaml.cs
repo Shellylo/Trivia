@@ -68,7 +68,7 @@ namespace TriviaClient
                 }
                 else
                 {
-                    LoginError.Visibility = Visibility.Visible;
+                    this.LoginError.Visibility = Visibility.Visible;
                 }
             }
             catch(Exception exception)
