@@ -21,9 +21,10 @@ namespace TriviaClient
     {
         public Client client;
 
-        public JoinRoomWindow()
+        public JoinRoomWindow(Client client)
         {
             InitializeComponent();
+            this.client = new Client(client);
             // get rooms from server
             UpdateRoomsToList();
         }
@@ -40,7 +41,7 @@ namespace TriviaClient
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            MenuWindow mw = new MenuWindow(client);
+            MenuWindow mw = new MenuWindow(this.client);
             this.Close();
             mw.Show();
         }
