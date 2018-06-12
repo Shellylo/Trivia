@@ -29,14 +29,14 @@ namespace TriviaClient
 
         private void JoinRoom_Click(object sender, RoutedEventArgs e)
         {
-            JoinRoomWindow jrw = new JoinRoomWindow();
+            JoinRoomWindow jrw = new JoinRoomWindow(this.client);
             this.Close();
             jrw.Show();
         }
 
         private void CreateRoom_Click(object sender, RoutedEventArgs e)
         {
-            CreateRoomWindow crw = new CreateRoomWindow();
+            CreateRoomWindow crw = new CreateRoomWindow(this.client);
             this.Close();
             crw.Show();
         }

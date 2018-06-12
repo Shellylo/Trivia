@@ -80,7 +80,7 @@ namespace TriviaClient
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mw = new MainWindow();
+            MainWindow mw = new MainWindow(this.client);
             this.Close();
             mw.Show();
         }

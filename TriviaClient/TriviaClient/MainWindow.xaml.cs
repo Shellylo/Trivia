@@ -79,7 +79,7 @@ namespace TriviaClient
 
         private void Signup_Click(object sender, RoutedEventArgs e)
         {
-            SignupWindow sw = new SignupWindow(client);
+            SignupWindow sw = new SignupWindow(this.client);
             this.Close();
             sw.Show();
         }

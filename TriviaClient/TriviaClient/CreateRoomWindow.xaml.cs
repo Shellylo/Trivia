@@ -21,14 +21,15 @@ namespace TriviaClient
     {
         public Client client;
 
-        public CreateRoomWindow()
+        public CreateRoomWindow(Client client)
         {
             InitializeComponent();
+            this.client = new Client(client);
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            MenuWindow mw = new MenuWindow(client);
+            MenuWindow mw = new MenuWindow(this.client);
             this.Close();
             mw.Show();
         }
