@@ -22,9 +22,9 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="1" Text="Signup And&#x0a;Start Playing!" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Foreground="Crimson"/>
-        <TextBox Name="Username" Grid.Column="1" Grid.Row="2" Height="30" Width="225" Text="Username" FontSize="20" Foreground="LightGray" PreviewMouseDown="Username_Down" PreviewKeyDown="UsernameTab_Down"/>
+        <TextBox Name="Username" Grid.Column="1" Grid.Row="2" Height="30" Width="225" Text="Username" FontSize="20" Foreground="LightGray" PreviewMouseDown="Username_Down"/>
         <TextBox Name="Password" Grid.Column="1" Grid.Row="3" Height="30" Width="225" FontSize="20" Text="Password" Foreground="LightGray" PreviewMouseDown="Password_Down"/>
-        <PasswordBox Name="PasswordBox" Grid.Column="1" Grid.Row="3" Height="30" Width="225" FontSize="20" Visibility="Hidden" PreviewKeyDown="PasswordTab_Down"/>
+        <PasswordBox Name="PasswordBox" Grid.Column="1" Grid.Row="3" Height="30" Width="225" FontSize="20" Visibility="Hidden"/>
         <TextBox Name="Email" Grid.Column="1" Grid.Row="4" Height="30" Width="225" Text="Email" FontSize="20" Foreground="LightGray" PreviewMouseDown="Email_Down"/>
         <Button Name="Signup" Grid.Column="1" Grid.Row="5" Width="225" Content="Signup" FontSize="20" Foreground="Crimson" BorderThickness="0" Click="Signup_Click"/>
         <Button Name="Back" Grid.Row="6" Width="80" Height="30" Content="Back" FontSize="15" Foreground="Crimson" BorderThickness="0" Click="Back_Click"/>

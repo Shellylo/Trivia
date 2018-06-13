@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace TriviaClient
 {
-    public class JsonResponsePacketDeserializer
+    class JsonResponsePacketDeserializer
     {
         enum respCodes : uint
         {
