@@ -22,7 +22,7 @@
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="1" Grid.ColumnSpan="3" FontSize="90" Text="TRIVIA" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Crimson"/>
-        <TextBox Name="Username" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Height="30" Width="225" Text="Username" FontSize="20" Foreground="LightGray" PreviewMouseDown="Username_Down"/>
+        <TextBox Name="Username" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Height="30" Width="225" Text="Username" FontSize="20" Foreground="LightGray" PreviewMouseDown="Username_Down" PreviewKeyDown="UsernameTab_Down"/>
         <TextBox Name="Password" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2" Height="30" Width="225" FontSize="20" Text="Password" Foreground="LightGray" PreviewMouseDown="Password_Down"/>
         <PasswordBox Name="PasswordBox" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2" Height="30" Width="225" FontSize="20" Visibility="Hidden"/>
         <Button Name="Signup" Grid.Column="1" Grid.Row="3" Width="110" HorizontalAlignment="Right" Content="Signup" FontSize="20" Foreground="Crimson" BorderThickness="0" Click="Signup_Click"/>

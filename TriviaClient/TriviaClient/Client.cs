@@ -70,6 +70,7 @@ namespace TriviaClient
             temp = recvLengthBuff[1];
             recvLengthBuff[1] = recvLengthBuff[2];
             recvLengthBuff[2] = temp;
+            this.clientStream.Read(recvLengthBuff, 0, 4);   
             uint recvCode = Convert.ToUInt32(recvCodeBuff[0]);
             uint recvLength = BitConverter.ToUInt32(recvLengthBuff, 0);
             if(recvCode != code)
