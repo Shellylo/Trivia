@@ -98,7 +98,7 @@ RequestResult MenuRequestHandler::getHighscores(Request req)
 RequestResult MenuRequestHandler::joinRoom(Request req)
 {
 	JoinRoomRequest request = JsonRequestPacketDeserializer::deserializeJoinRoomRequest(req.buffer);
-	JoinRoomResponse result = { 1 };
+	LoginResponse result = { 1 };
 	RoomMemberRequestHandler* rmrh = nullptr;
 	try
 	{

@@ -44,22 +44,14 @@ namespace TriviaClient
             }
         }
 
-        private void UsernameTab_Down(object sender, KeyEventArgs e)
+        private void Password_Down(object sender, MouseEventArgs e)
         {
-            if ((!e.KeyboardDevice.IsKeyDown(Key.LeftShift)) && (!e.KeyboardDevice.IsKeyDown(Key.RightShift)) && e.KeyboardDevice.IsKeyDown(Key.Tab))
+            if (this.Password.Foreground == Brushes.LightGray)
             {
                 this.Password.Visibility = Visibility.Hidden;
                 this.PasswordBox.Visibility = Visibility.Visible;
                 this.PasswordBox.Focus();
-                e.Handled = true;
             }
-        }
-
-        private void Password_Down(object sender, MouseEventArgs e)
-        {
-            this.Password.Visibility = Visibility.Hidden;
-            this.PasswordBox.Visibility = Visibility.Visible;
-            this.PasswordBox.Focus();
         }
 
         private void Login_Click(object sender, RoutedEventArgs e)
