@@ -37,7 +37,7 @@ Room& RoomManager::joinRoom(LoggedUser user, int ID)
 	{
 		throw std::exception();
 	}
-	if (roomData.maxPlayers >= room.getAllUsers().size()) // room is full
+	if (roomData.maxPlayers <= room.getAllUsers().size()) // room is full
 	{
 		throw std::exception();
 	}
