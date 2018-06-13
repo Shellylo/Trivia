@@ -45,7 +45,7 @@ namespace TriviaClient
             bool inputOk = true;
             for(int i = 0; i < variables.Length && inputOk; i++)
             {
-                inputOk = inputOk && variables[0];
+                inputOk = inputOk && variables[i]; //
             }
             if(inputOk)
             {
@@ -92,7 +92,7 @@ namespace TriviaClient
 
         private void MaxPlayersBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            variables[1] = (this.MaxPlayersBox.Text.All(c => Char.IsDigit(c)));
+            variables[1] = (this.MaxPlayersBox.Text.All(c => Char.IsDigit(c)) && this.MaxPlayersBox.Text.Length > 0);
             if (variables[1])
             {
                 this.MaxPlayersError.Visibility = Visibility.Hidden;
@@ -105,7 +105,7 @@ namespace TriviaClient
 
         private void QuestionCountBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            variables[2] = (this.QuestionCountBox.Text.All(c => Char.IsDigit(c)));
+            variables[2] = (this.QuestionCountBox.Text.All(c => Char.IsDigit(c)) && this.QuestionCountBox.Text.Length > 0);
             if (variables[2])
             {
                 this.QuestionCountError.Visibility = Visibility.Hidden;
@@ -118,7 +118,7 @@ namespace TriviaClient
 
         private void QuestionTimeBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            variables[3] = (this.QuestionTimeBox.Text.All(c => Char.IsDigit(c)));
+            variables[3] = (this.QuestionTimeBox.Text.All(c => Char.IsDigit(c)) && this.QuestionTimeBox.Text.Length > 0);
             if (variables[3])
             {
                 this.QuestionTimeError.Visibility = Visibility.Hidden;
