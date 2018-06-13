@@ -53,11 +53,23 @@ namespace TriviaClient
             {
                 send = JsonRequestPacketSerializer.createBuff(code);
             }
-            //Console.WriteLine(new ASCIIEncoding().GetString(send).Length);
+            byte temp = send[1];
+            send[1] = send[4];
+            send[4] = temp;
+            temp = send[2];
+            send[2] = send[3];
+            send[3] = temp;
             this.clientStream.Write(send, 0, send.Length);
             byte[] recvCodeBuff = new byte[1];
             byte[] recvLengthBuff = new byte[4];
             this.clientStream.Read(recvCodeBuff, 0, 1);
+            this.clientStream.Read(recvLengthBuff, 0, 4);
+            temp = recvLengthBuff[0];
+            recvLengthBuff[0] = recvLengthBuff[3];
+            recvLengthBuff[3] = temp;
+            temp = recvLengthBuff[1];
+            recvLengthBuff[1] = recvLengthBuff[2];
+            recvLengthBuff[2] = temp;
             this.clientStream.Read(recvLengthBuff, 0, 4);   
             uint recvCode = Convert.ToUInt32(recvCodeBuff[0]);
             uint recvLength = BitConverter.ToUInt32(recvLengthBuff, 0);

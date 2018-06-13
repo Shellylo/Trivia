@@ -6,7 +6,7 @@
 #include <string>
 
 #define DB_NAME "TriviaDB.sqlite"
-#define TABLES_NUM 3
+#define TABLES_NUM 4
 
 #define HIGHSCORES_NUM "5"
 
