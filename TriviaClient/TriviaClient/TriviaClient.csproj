@@ -57,9 +57,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AdminRoomWindow.xaml.cs">
-      <DependentUpon>AdminRoomWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Client.cs" />
     <Compile Include="CreateRoomWindow.xaml.cs">
       <DependentUpon>CreateRoomWindow.xaml</DependentUpon>
@@ -75,13 +72,12 @@
     <Compile Include="MenuWindow.xaml.cs">
       <DependentUpon>MenuWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RoomDetailsWindow.xaml.cs">
+      <DependentUpon>RoomDetailsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SignupWindow.xaml.cs">
       <DependentUpon>SignupWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="AdminRoomWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="CreateRoomWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -107,6 +103,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MenuWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RoomDetailsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

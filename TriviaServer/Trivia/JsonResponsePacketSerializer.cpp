@@ -135,7 +135,7 @@ std::vector<json> JsonResponsePacketSerializer::createJsonRoomArray(std::vector<
 	std::vector<json> jrooms;
 	for(int i = 0; i < rooms.size(); i++)
 	{
-		jrooms.push_back({ {"id", rooms[i].id}, {"name", rooms[i].name}, {"maxPlayers", rooms[i].maxPlayers}, {"timePerQuestion", rooms[i].timePerQuestion}, {"roomState", rooms[i].roomState} });
+		jrooms.push_back({ {"id", rooms[i].id}, {"name", rooms[i].name}, {"maxPlayers", rooms[i].maxPlayers}, {"timePerQuestion", rooms[i].timePerQuestion}, {"isActive", rooms[i].roomState} });
 	}
 	return jrooms;
 }
