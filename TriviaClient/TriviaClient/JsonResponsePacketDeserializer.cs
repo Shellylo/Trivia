@@ -277,7 +277,8 @@ namespace TriviaClient
 
         public static T createStruct<T>(byte[] buff)
         {
-            return JsonConvert.DeserializeObject<T>(new ASCIIEncoding().GetString(buff));
+            string s = new ASCIIEncoding().GetString(buff);
+            return JsonConvert.DeserializeObject<T>(s);
         }
     }
 }

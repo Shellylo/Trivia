@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TriviaClient"
         mc:Ignorable="d"
         Title="HighscoresWindow" Height="350" Width="525">
-    <Grid>
+    <Grid Name="highscoresGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="1.75*"/>
@@ -25,9 +25,46 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        <TextBlock Text="My Highscores" Grid.ColumnSpan="2" HorizontalAlignment="Center" Foreground="Crimson" FontSize="25"/>
+        <TextBlock Text="All Times Highscores" Grid.Column="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" Foreground="Crimson" FontSize="25"/>
+        <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Score" Foreground="RosyBrown" FontSize="15" FontWeight="Bold"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Date" Foreground="RosyBrown" FontSize="15" FontWeight="Bold"/>
+        <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Username" Foreground="RosyBrown" FontSize="15" FontWeight="Bold"/>
+        <TextBlock Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Score" Foreground="RosyBrown" FontSize="15" FontWeight="Bold"/>
+        <TextBlock Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Date" Foreground="RosyBrown" FontSize="15" FontWeight="Bold"/>
+        <Rectangle Grid.ColumnSpan="2" Grid.Row="3" Fill="Gold"/>
+        <Rectangle Grid.ColumnSpan="2" Grid.Row="4" Fill="WhiteSmoke"/>
+        <Rectangle Grid.ColumnSpan="2" Grid.Row="5" Fill="SandyBrown"/>
+        <Rectangle Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="3" Fill="Gold"/>
+        <Rectangle Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="4" Fill="WhiteSmoke"/>
+        <Rectangle Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="5" Fill="SandyBrown"/>
+        <Button Name="Back" Grid.Row="8" Width="80" Height="30" Content="Back" FontSize="15" Foreground="Crimson" BorderThickness="0" Click="Back_Click" Margin="7,4,7,0" VerticalAlignment="Top"/>
+        <TextBlock Name="score1" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <TextBlock Name="score2" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <TextBlock Name="score3" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <TextBlock Name="score4" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <TextBlock Name="score5" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <TextBlock Name="date1" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <TextBlock Name="date2" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <TextBlock Name="date3" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <TextBlock Name="date4" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <TextBlock Name="date5" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
 
-        <TextBlock Text="My Highscores" HorizontalAlignment="Center"/>
-        <Line Y2="350" Grid.Column="1" Grid.RowSpan="9" HorizontalAlignment="Right" Stroke="Crimson" StrokeThickness="4"/>
-        <Line Y2="350" Grid.Column="2" Grid.RowSpan="9" HorizontalAlignment="Left" Stroke="Crimson" StrokeThickness="7"/>
+        <TextBlock Name="username1" Grid.Column="2" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <TextBlock Name="username2" Grid.Column="2" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <TextBlock Name="username3" Grid.Column="2" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <TextBlock Name="username4" Grid.Column="2" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <TextBlock Name="username5" Grid.Column="2" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <TextBlock Name="gscore1" Grid.Column="3" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <TextBlock Name="gscore2" Grid.Column="3" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <TextBlock Name="gscore3" Grid.Column="3" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <TextBlock Name="gscore4" Grid.Column="3" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <TextBlock Name="gscore5" Grid.Column="3" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <TextBlock Name="gdate1" Grid.Column="4" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <TextBlock Name="gdate2" Grid.Column="4" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <TextBlock Name="gdate3" Grid.Column="4" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <TextBlock Name="gdate4" Grid.Column="4" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <TextBlock Name="gdate5" Grid.Column="4" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+        <Line Grid.ColumnSpan="2" Grid.RowSpan="9" Y2="1" StrokeThickness="5" Stroke="White" Stretch="Uniform" HorizontalAlignment="Right"/>
     </Grid>
 </Window>
