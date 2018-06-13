@@ -36,6 +36,17 @@ namespace TriviaClient
             }
         }
 
+        private void UsernameTab_Down(object sender, KeyEventArgs e)
+        {
+            if ((!e.KeyboardDevice.IsKeyDown(Key.LeftShift)) && (!e.KeyboardDevice.IsKeyDown(Key.RightShift)) && e.KeyboardDevice.IsKeyDown(Key.Tab))
+            {
+                this.Password.Visibility = Visibility.Hidden;
+                this.PasswordBox.Visibility = Visibility.Visible;
+                this.PasswordBox.Focus();
+                e.Handled = true;
+            }
+        }
+
         private void Password_Down(object sender, MouseEventArgs e)
         {
             if (this.Password.Foreground == Brushes.LightGray)
@@ -43,6 +54,15 @@ namespace TriviaClient
                 this.Password.Visibility = Visibility.Hidden;
                 this.PasswordBox.Visibility = Visibility.Visible;
                 this.PasswordBox.Focus();
+            }
+        }
+
+        private void PasswordTab_Down(object sender, KeyEventArgs e)
+        {
+            if ((!e.KeyboardDevice.IsKeyDown(Key.LeftShift)) && (!e.KeyboardDevice.IsKeyDown(Key.RightShift)) && e.KeyboardDevice.IsKeyDown(Key.Tab))
+            {
+                this.Email.Text = "";
+                this.Email.Foreground = Brushes.Black;
             }
         }
 
