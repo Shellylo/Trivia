@@ -114,7 +114,7 @@ RequestResult MenuRequestHandler::joinRoom(Request req)
 RequestResult MenuRequestHandler::createRoom(Request req)
 {
 	CreateRoomRequest request = JsonRequestPacketDeserializer::deserializeCreateRoomRequest(req.buffer);
-	LoginResponse result = { 1 };
+	CreateRoomResponse result = { 1 };
 	RoomAdminRequestHandler* rarh = nullptr;
 	try
 	{

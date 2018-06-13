@@ -131,17 +131,7 @@ namespace TriviaClient
         
         private void Details_Click(object sender, RoutedEventArgs e)
         {
-            this.JoinRoomError.Visibility = Visibility.Hidden;
-            if (this.RoomsList.SelectedIndex != -1)
-            {
-                RoomDetailsWindow rdw = new RoomDetailsWindow(this.rooms[this.RoomsList.SelectedIndex]);
-                this.SelectRoomError.Visibility = Visibility.Hidden;
-                rdw.Show();
-            }
-            else
-            {
-                this.SelectRoomError.Visibility = Visibility.Visible;
-            }
+
         }
     }
 }
