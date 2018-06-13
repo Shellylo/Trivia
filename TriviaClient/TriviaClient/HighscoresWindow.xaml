@@ -27,7 +27,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock Text="My Highscores" HorizontalAlignment="Center"/>
-        <Line Y2="350" Grid.Column="1" Grid.RowSpan="9" HorizontalAlignment="Right" Stroke="Crimson" StrokeThickness="4"/>
-        <Line Y2="350" Grid.Column="2" Grid.RowSpan="9" HorizontalAlignment="Left" Stroke="Crimson" StrokeThickness="7"/>
+        <Line Grid.ColumnSpan="5" Grid.RowSpan="9" Y2="1" StrokeThickness="1" Stroke="Crimson" Stretch="Uniform"/>
+        
     </Grid>
 </Window>
