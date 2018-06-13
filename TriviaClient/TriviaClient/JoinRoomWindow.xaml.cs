@@ -94,9 +94,9 @@ namespace TriviaClient
                     JsonResponsePacketDeserializer.JoinRoomResponse joinRoomResp = this.client.SendAndReceive<JsonResponsePacketDeserializer.JoinRoomResponse>(joinRoomReq, (uint)JsonRequestPacketSerializer.reqCodes.JOINROOM_REQ_CODE);
                     if (joinRoomResp.status == 1)
                     {
-                        //MemberRoomWindow mrw = new MemeberRoomWindow(this.client);
-                        //this.Close();
-                        //mrw.Show();
+                        MemberRoomWindow mrw = new MemberRoomWindow(this.client, this.rooms[this.RoomsList.SelectedIndex].name);
+                        this.Close();
+                        mrw.Show();
                     }
                     else
                     {
