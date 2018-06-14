@@ -56,7 +56,7 @@ RequestResult RoomMemberRequestHandler::getRoomState(Request req)
 	{
 		result.status = 0;
 	}
-	return result.status ? RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), m_handlerFactory.createMenuRequestHandler(m_user) } : RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), nullptr };
+	return result.status ? RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), this } : RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), nullptr };
 }
 
 RequestResult RoomMemberRequestHandler::joinGame(Request req)
