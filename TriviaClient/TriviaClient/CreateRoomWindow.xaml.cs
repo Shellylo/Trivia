@@ -55,9 +55,9 @@ namespace TriviaClient
                     JsonResponsePacketDeserializer.CreateRoomResponse createRoomResp = this.client.SendAndReceive<JsonResponsePacketDeserializer.CreateRoomResponse>(createRoomReq, (uint)JsonRequestPacketSerializer.reqCodes.CREATEROOM_REQ_CODE);
                     if (createRoomResp.status == 1)
                     {
-                        //AdminRoomWindow arw = new AdminRoomWindow(this.client);
-                        //this.Close();
-                        //arw.Show();
+                        AdminRoomWindow arw = new AdminRoomWindow(this.client, this.NameBox.Text);
+                        this.Close();
+                        arw.Show();
                     }
                     else
                     {
