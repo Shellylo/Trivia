@@ -35,7 +35,7 @@ std::string Game::submitAnswer(LoggedUser user, std::string answer)
 	{
 		if (currentQuestion == m_questions[i].getQs())
 		{
-			i == qsNum - 1 ? playerGameData.currentQuestion = Question("", "", std::vector<std::string>()) : playerGameData.currentQuestion = m_questions[i];
+			i == qsNum - 1 ? playerGameData.currentQuestion = Question("", "", std::vector<std::string>()) : playerGameData.currentQuestion = m_questions[i + 1];
 		}
 	}
 	return correctAns;
