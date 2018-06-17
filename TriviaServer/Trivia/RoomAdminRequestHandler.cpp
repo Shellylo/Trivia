@@ -20,9 +20,9 @@ RequestResult RoomAdminRequestHandler::handleRequest(Request req)
 	case STARTGAME_REQ_CODE:
 		reqRes = startGame(req);
 		break;
-	//case GETROOMSTATE_REQ_CODE:
-	//	reqRes = getRoomState(req);
-	//	break;
+	case GETROOMSTATE_REQ_CODE:
+		reqRes = getRoomState(req);
+		break;
 	}
 	return reqRes;
 }
@@ -54,4 +54,22 @@ RequestResult RoomAdminRequestHandler::startGame(Request req)
 		result.status = 0;
 	}
 	return result.status ? RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), grh } : RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), nullptr };
+}
+
+RequestResult RoomAdminRequestHandler::getRoomState(Request req)
+{
+	GetRoomStateResponse result = { 1, 0, std::vector<std::string>(), 0, 0 };
+	try
+	{
+		RoomData data = m_room.getRoomData();
+		result.roomStatus = data.roomState;
+		result.players = m_roomManager.getPlayersInRoom(data.id);
+		result.questionCount = data.questionCount;
+		result.answerTimeout = data.timePerQuestion;
+	}
+	catch (...)
+	{
+		result.status = 0;
+	}
+	return result.status ? RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), this } : RequestResult{ JsonResponsePacketSerializer::serializeResponse(result), nullptr };
 }

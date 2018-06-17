@@ -56,7 +56,7 @@ std::vector<char> JsonResponsePacketSerializer::serializeResponse(HighscoreRespo
 
 std::vector<char> JsonResponsePacketSerializer::serializeResponse(GetRoomStateResponse resp)
 {
-	json j = { { "status", resp.status }, { "roomStatus", resp.roomStatus }, { "players", resp.players }, { "questionsCount", resp.questionCount }, { "answerTimeout", resp.answerTimeout } };
+	json j = { { "status", resp.status }, { "roomStatus", resp.roomStatus }, { "players", resp.players }, { "questionCount", resp.questionCount }, { "answerTimeout", resp.answerTimeout } };
 	return createBuff(j, GETROOMSTATE_RESP_CODE);
 }
 
