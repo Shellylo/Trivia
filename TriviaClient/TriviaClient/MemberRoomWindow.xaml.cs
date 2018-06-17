@@ -60,7 +60,7 @@ namespace TriviaClient
                     {
                         this.QuestionsTime.Text = "Timeout: " + roomStateResp.answerTimeout.ToString();
                     }
-                    this.PlayersList.Items.Clear();
+                    this.PlayersList.Children.Clear();
                     for (int i = 0; i < roomStateResp.players.Count; i++)
                     {
                         TextBlock playerName = new TextBlock();
@@ -70,7 +70,7 @@ namespace TriviaClient
                         playerName.VerticalAlignment = VerticalAlignment.Center;
                         playerName.Height = 30;
                         playerName.Width = 525;
-                        this.PlayersList.Items.Add(playerName);
+                        this.PlayersList.Children.Add(playerName);
                     }
                 }
                 else
