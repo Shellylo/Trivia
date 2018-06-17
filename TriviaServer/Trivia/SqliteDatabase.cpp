@@ -86,8 +86,8 @@ void SqliteDatabase::finishGame(int gameId, std::string endTime)
 void SqliteDatabase::addAnswer(int gameId, std::string username, std::string answer, bool isCorrect, std::string time, std::string question)
 {
 	sendStatement("INSERT INTO ANSWERS (GAME_ID, USERNAME, QUESTION_ID, PLAYER_ANSWER, IS_CORRECT, ANSWER_TIME) VALUES (" +
-				  std::to_string(gameId) + ", " + username + ", (SELECT QUESTION_ID FROM QUESTIONS WHERE QUESTION = \"" +
-				  question + "\";), \"" + answer + "\", " + std::to_string(isCorrect) + ", \"" + time + "\");");
+				  std::to_string(gameId) + ", \"" + username + "\", (SELECT QUESTION_ID FROM QUESTIONS WHERE QUESTION = \"" +
+				  question + "\"), \"" + answer + "\", " + std::to_string(isCorrect) + ", \"" + time + "\");");
 }
 
 bool SqliteDatabase::initDB()

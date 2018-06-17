@@ -14,7 +14,7 @@ Game & GameManager::createGame(LoggedUser user, Room room)
 	std::vector<LoggedUser> users = room.getAllUsers();
 	for (int i = 0; i < users.size(); i++)
 	{
-		players.find(users[i])->second = GameData{questions[0], 0, 0, 0, 0};
+		players.insert(std::pair<LoggedUser, GameData>(users[i], GameData{ questions[0], 0, 0, 0, 0 }));
 	}
 	m_games[room.getRoomData().id] = Game(id, questions, players);
 	return m_games[room.getRoomData().id];

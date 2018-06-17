@@ -106,9 +106,9 @@ namespace TriviaClient
                 if (startGameResp.status == 1)
                 {
                     this.dt.Stop();
-                    //GameWindow gw = new GameWindow(this.client);
-                    //this.Close();
-                    //gw.Show();
+                    GameWindow gw = new GameWindow(this.client);
+                    this.Close();
+                    gw.Show();
                 }
                 else
                 {
