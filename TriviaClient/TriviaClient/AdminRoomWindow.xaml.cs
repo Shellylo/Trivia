@@ -106,7 +106,7 @@ namespace TriviaClient
                 if (startGameResp.status == 1)
                 {
                     this.dt.Stop();
-                    GameWindow gw = new GameWindow(this.client);
+                    GameWindow gw = new GameWindow(this.client, Int32.Parse(this.QuestionsTime.Text.Substring("Timeout: ".Length)));
                     this.Close();
                     gw.Show();
                 }

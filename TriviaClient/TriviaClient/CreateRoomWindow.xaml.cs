@@ -45,7 +45,7 @@ namespace TriviaClient
             bool inputOk = true;
             for(int i = 0; i < variables.Length && inputOk; i++)
             {
-                inputOk = inputOk && variables[i]; //
+                inputOk = inputOk && variables[i]; 
             }
             if(inputOk)
             {

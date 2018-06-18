@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace TriviaClient
 {
@@ -21,8 +22,10 @@ namespace TriviaClient
     {
         private Client client;
         private List<string> answers;
+        private DispatcherTimer dt;
+        private int time;
 
-        public GameWindow(Client client)
+        public GameWindow(Client client, int time)
         {
             InitializeComponent();
             this.client = new Client(client);
@@ -30,6 +33,12 @@ namespace TriviaClient
             this.answers = questionResp.answers;
             updateScreen(questionResp.question);
             this.KeyDown += new KeyEventHandler(KeyPressed);
+            this.time = time;
+            this.Time.Text = this.time.ToString();
+            this.dt = new DispatcherTimer();
+            this.dt.Tick += CountTime;
+            this.dt.Interval = new TimeSpan(0, 0, 1);
+            this.dt.Start();
         }
 
         private void updateScreen(string question)
@@ -61,6 +70,7 @@ namespace TriviaClient
 
         private void KeyPressed(Object sender, KeyEventArgs e)
         {
+            this.Time.Text = this.time.ToString();
             string answer = "";
             switch (e.Key)
             {
@@ -77,21 +87,20 @@ namespace TriviaClient
                     answer = answers[3];
                     break;
             }
-            JsonRequestPacketSerializer.SubmitAnswerRequest submitAnswerReq = new JsonRequestPacketSerializer.SubmitAnswerRequest(answer);
+            SendAnswer(answer);
+        }
+
+        private void Leave_Click(object sender, RoutedEventArgs e)
+        {
             try
             {
-                JsonResponsePacketDeserializer.SubmitAnswerResponse submitAnswerResp = this.client.SendAndReceive<JsonResponsePacketDeserializer.SubmitAnswerResponse>(submitAnswerReq, (uint)JsonRequestPacketSerializer.reqCodes.SUBMITANSWER_REQ_CODE);
-                if (submitAnswerResp.status == 1)
+                JsonResponsePacketDeserializer.LeaveGameResponse leaveGameResp = this.client.SendAndReceive<JsonResponsePacketDeserializer.LeaveGameResponse>(null, (uint)JsonRequestPacketSerializer.reqCodes.LEAVEGAME_REQ_CODE);
+                if (leaveGameResp.status == 1)
                 {
-                    if (submitAnswerResp.hasFinished)
-                    {
-                        //FinishGameWindow fgw = new FinishGameWindow(this.client);
-                        //this.Close();
-                        //fgw.Show();
-                    }
-                    JsonResponsePacketDeserializer.GetQuestionResponse questionResp = getQuestion();
-                    this.answers = questionResp.answers;
-                    updateScreen(questionResp.question);
+                    dt.Stop();
+                    MenuWindow mw = new MenuWindow(this.client);
+                    this.Close();
+                    mw.Show();
                 }
                 else
                 {
@@ -103,17 +112,37 @@ namespace TriviaClient
 
             }
         }
-
-        private void Leave_Click(object sender, RoutedEventArgs e)
+        
+        private void CountTime(Object sender, EventArgs e)
         {
+            int time = Int32.Parse(this.Time.Text);
+            time--;
+            if(time == 0)
+            {
+                SendAnswer("");
+                time = this.time;
+            }
+            this.Time.Text = time.ToString();
+        }
+
+        private void SendAnswer(string answer)
+        {
+            JsonRequestPacketSerializer.SubmitAnswerRequest submitAnswerReq = new JsonRequestPacketSerializer.SubmitAnswerRequest(answer);
             try
             {
-                JsonResponsePacketDeserializer.LeaveGameResponse leaveGameResp = this.client.SendAndReceive<JsonResponsePacketDeserializer.LeaveGameResponse>(null, (uint)JsonRequestPacketSerializer.reqCodes.LEAVEGAME_REQ_CODE);
-                if (leaveGameResp.status == 1)
+                JsonResponsePacketDeserializer.SubmitAnswerResponse submitAnswerResp = this.client.SendAndReceive<JsonResponsePacketDeserializer.SubmitAnswerResponse>(submitAnswerReq, (uint)JsonRequestPacketSerializer.reqCodes.SUBMITANSWER_REQ_CODE);
+                if (submitAnswerResp.status == 1)
                 {
-                    MenuWindow mw = new MenuWindow(this.client);
-                    this.Close();
-                    mw.Show();
+                    if (submitAnswerResp.hasFinished)
+                    {
+                        dt.Stop();
+                        ResultsWindow rw = new ResultsWindow(this.client);
+                        this.Close();
+                        rw.Show();
+                    }
+                    JsonResponsePacketDeserializer.GetQuestionResponse questionResp = getQuestion();
+                    this.answers = questionResp.answers;
+                    updateScreen(questionResp.question);
                 }
                 else
                 {
