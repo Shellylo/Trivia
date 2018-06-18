@@ -124,7 +124,7 @@ namespace TriviaClient
             }
             this.Time.Text = time.ToString();
         }
-
+        
         private void SendAnswer(string answer)
         {
             JsonRequestPacketSerializer.SubmitAnswerRequest submitAnswerReq = new JsonRequestPacketSerializer.SubmitAnswerRequest(answer);
