@@ -40,6 +40,7 @@ void GameManager::deleteGame(Game & game)
 		if (it->second == game)
 		{
 			m_games.erase(it);
+			break;
 		}
 	}
 }

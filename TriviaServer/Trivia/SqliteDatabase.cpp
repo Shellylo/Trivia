@@ -32,7 +32,7 @@ std::vector<Highscore> SqliteDatabase::getHighscores()
 {
 	std::vector<Highscore> ret;
 	sendStatement("SELECT USERNAME, COUNT(IS_CORRECT), END_TIME FROM ANSWERS INNER JOIN GAMES ON ANSWERS.GAME_ID = GAMES.GAME_ID WHERE IS_CORRECT = 1 GROUP BY ANSWERS.GAME_ID, ANSWERS.USERNAME ORDER BY COUNT(IS_CORRECT) DESC LIMIT "
-				  + std::string(HIGHSCORES_NUM) + ";", getHighscores, &ret); // std::string(HIGHSCORES_NUM)
+				  + std::string(HIGHSCORES_NUM) + ";", getHighscoresCallback, &ret); // std::string(HIGHSCORES_NUM)
 	return ret;
 }
 
@@ -40,7 +40,7 @@ std::vector<Highscore> SqliteDatabase::getHighscores(std::string username)
 {
 	std::vector<Highscore> ret;
 	sendStatement("SELECT USERNAME, COUNT(IS_CORRECT), END_TIME FROM ANSWERS INNER JOIN GAMES ON ANSWERS.GAME_ID = GAMES.GAME_ID WHERE USERNAME = \"" +
-				  username + "\" AND IS_CORRECT = 1 GROUP BY ANSWERS.GAME_ID ORDER BY COUNT(IS_CORRECT) DESC LIMIT " + HIGHSCORES_NUM + ";", getHighscores, &ret);
+				  username + "\" AND IS_CORRECT = 1 GROUP BY ANSWERS.GAME_ID ORDER BY COUNT(IS_CORRECT) DESC LIMIT " + HIGHSCORES_NUM + ";", getHighscoresCallback, &ret);
 	return ret;
 }
 
@@ -127,7 +127,7 @@ int SqliteDatabase::doesExistCallback(void * data, int argc, char ** argv, char 
 	return 0;
 }
 
-int SqliteDatabase::getHighscores(void * data, int argc, char ** argv, char ** colName)
+int SqliteDatabase::getHighscoresCallback(void * data, int argc, char ** argv, char ** colName)
 {
 	Highscore highscore;
 	for (int i = 0; i < argc; i++)

@@ -89,7 +89,7 @@ RequestResult GameRequestHandler::leaveGame(Request req)
 	LeaveGameResponse result = { 1 };
 	try
 	{
-		if (m_game.removePlayer(m_user))
+		if (!m_game.removePlayer(m_user))
 		{
 			m_gameManager.deleteGame(m_game);
 		}

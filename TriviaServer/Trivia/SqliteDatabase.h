@@ -98,7 +98,7 @@ private:
 		Input: void* data (must be std::vector<Highscore>*), argument count, arguments, column names
 		Output: int
 	*/
-	static int getHighscores(void * data, int argc, char ** argv, char ** colName);
+	static int getHighscoresCallback(void * data, int argc, char ** argv, char ** colName);
 	/*
 		Call back function that returns one number (for example - ID)
 		Input: void* data (must be int*), argument count, arguments, column names
