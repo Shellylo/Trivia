@@ -8,7 +8,19 @@
         Title="ResultsWindow" Height="350" Width="525">
     <Grid>
         <Grid.ColumnDefinitions>
-            
+            <ColumnDefinition/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.6*"/>
+            <RowDefinition Height="5.5*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Game Over" Foreground="Crimson" FontSize="35"/>
+        <ScrollViewer Grid.ColumnSpan="3" Grid.Row="1">
+            <StackPanel Name="Scores"/>
+        </ScrollViewer>
+        <Button Name="Leave" Grid.Row="6" Width="80" Height="30" Content="Leave" FontSize="15" Foreground="Crimson" BorderThickness="0" Click="Leave_Click"/>
     </Grid>
 </Window>

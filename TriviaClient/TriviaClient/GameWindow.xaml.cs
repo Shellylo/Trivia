@@ -85,9 +85,9 @@ namespace TriviaClient
                 {
                     if (submitAnswerResp.hasFinished)
                     {
-                        //FinishGameWindow fgw = new FinishGameWindow(this.client);
-                        //this.Close();
-                        //fgw.Show();
+                        ResultsWindow rw = new ResultsWindow(this.client);
+                        this.Close();
+                        rw.Show();
                     }
                     JsonResponsePacketDeserializer.GetQuestionResponse questionResp = getQuestion();
                     this.answers = questionResp.answers;
