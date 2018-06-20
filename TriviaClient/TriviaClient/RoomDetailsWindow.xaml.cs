@@ -27,7 +27,7 @@ namespace TriviaClient
 
         private void showDetails(JsonResponsePacketDeserializer.RoomData data)
         {
-            this.RoomName.Text = data.name;
+            this.RoomName.Text = data.name + " Details";
             this.RoomId.Text = data.id.ToString();
             this.PlayersNum.Text = data.maxPlayers.ToString();
             this.QuestionsNum.Text = data.questionCount.ToString();
