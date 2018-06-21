@@ -42,29 +42,28 @@ namespace TriviaClient
                         switch (i)
                         {
                             case 0:
-                                username1.Text = highscore.username;
-                                gscore1.Text = (highscore.score).ToString();
-                                gdate1.Text = highscore.time;
+                                this.username1.Text = highscore.username;
+                                this.gscore1.Text = (highscore.score).ToString();
+                                this.gdate1.Text = highscore.time;
                                 break;
                             case 1:
-                                username2.Text = highscore.username;
-                                gscore2.Text = (highscore.score).ToString();
-                                gdate2.Text = highscore.time;
+                                this.username2.Text = highscore.username;
+                                this.gscore2.Text = (highscore.score).ToString();
+                                this.gdate2.Text = highscore.time;
                                 break;
                             case 2:
-                                username3.Text = highscore.username;
-                                gscore3.Text = (highscore.score).ToString();
-                                gdate3.Text = highscore.time;
+                                this.username3.Text = highscore.username;
+                                this.gscore3.Text = (highscore.score).ToString();
+                                this.gdate3.Text = highscore.time;
                                 break;
                             case 3:
-                                username4.Text = highscore.username;
-                                gscore4.Text = (highscore.score).ToString();
-                                gdate4.Text = highscore.time;
+                                this.username4.Text = highscore.username;
+                                this.gscore4.Text = (highscore.score).ToString();
+                                this.gdate4.Text = highscore.time;
                                 break;
-                            case 4:
-                                username5.Text = highscore.username;
-                                gscore5.Text = (highscore.score).ToString();
-                                gdate5.Text = highscore.time;
+                            case 4:                               this.username5.Text = highscore.username;
+                                this.gscore5.Text = (highscore.score).ToString();
+                                this.gdate5.Text = highscore.time;
                                 break;
                         }
                     }
