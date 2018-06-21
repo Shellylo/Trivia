@@ -143,5 +143,20 @@ namespace TriviaClient
                 this.SelectRoomError.Visibility = Visibility.Visible;
             }
         }
+
+        private void Players_Click(object sender, RoutedEventArgs e)
+        {
+            this.JoinRoomError.Visibility = Visibility.Hidden;
+            if (this.RoomsList.SelectedIndex != -1)
+            {
+                RoomPlayersWindow rpw = new RoomPlayersWindow(this.client, this.rooms[this.RoomsList.SelectedIndex]);
+                this.SelectRoomError.Visibility = Visibility.Hidden;
+                rpw.Show();
+            }
+            else
+            {
+                this.SelectRoomError.Visibility = Visibility.Visible;
+            }
+        }
     }
 }

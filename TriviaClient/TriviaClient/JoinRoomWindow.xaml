@@ -22,6 +22,7 @@
         <TextBlock Grid.Column="1" Text="Rooms" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" Foreground="Crimson"/>
         <ListBox Name="RoomsList" Grid.Row="2" Grid.ColumnSpan="3"/>
         <Button Name="Refresh" Width="80" Height="30" Content="Refresh" FontSize="15" Foreground="Crimson" BorderThickness="0" Click="Refresh_Click"/>
+        <Button Name="Players" Grid.Column="2" Width="80" Height="30" Content="Players" FontSize="15" Foreground="Crimson" BorderThickness="0" Click="Players_Click"/>
         <TextBlock Name="JoinRoomError" Text="Unable to join room" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" Foreground="Crimson" Visibility="Hidden"/>
         <TextBlock Name="SelectRoomError" Text="Please select a room to join" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" Foreground="Crimson" Visibility="Hidden"/>
         <Button Name="Back" Grid.Row="4" Width="80" Height="30" Content="Back" FontSize="15" Foreground="Crimson" BorderThickness="0" Click="Back_Click"/>

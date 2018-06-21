@@ -91,7 +91,11 @@ void Communicator::clientHandler(SOCKET socket)
 	while (true)
 	{
 		std::vector<char> info(INFO_LEN);
-		recv(socket, &info[0], INFO_LEN, 0);
+		if (recv(socket, &info[0], INFO_LEN, 0) == SOCKET_ERROR)
+		{
+			m_clients.erase(socket);
+			break;
+		}
 		int size = JsonRequestPacketDeserializer::binaryToInt(&info[1]);
 		std::vector<char> data(size);
 		if (size)
