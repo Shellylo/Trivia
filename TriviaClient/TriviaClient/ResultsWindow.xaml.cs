@@ -22,11 +22,13 @@ namespace TriviaClient
     {
         private Client client;
         private DispatcherTimer dt;
+        private bool isForcedClosing;
 
         public ResultsWindow(Client client)
         {
             InitializeComponent();
             this.client = new Client(client);
+            this.isForcedClosing = true;
             this.dt = new DispatcherTimer();
             this.dt.Tick += updateScores;
             this.dt.Interval = new TimeSpan(0, 0, 1);
@@ -96,6 +98,7 @@ namespace TriviaClient
                 JsonResponsePacketDeserializer.LeaveGameResponse leaveGameResp = this.client.SendAndReceive<JsonResponsePacketDeserializer.LeaveGameResponse>(null, (uint)JsonRequestPacketSerializer.reqCodes.LEAVEGAME_REQ_CODE);
                 if (leaveGameResp.status == 1)
                 {
+                    this.isForcedClosing = false;
                     this.dt.Stop();
                     MenuWindow mw = new MenuWindow(this.client);
                     this.Close();
@@ -109,6 +112,15 @@ namespace TriviaClient
             catch (Exception exception)
             {
 
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (this.isForcedClosing)
+            {
+                this.client.SendAndReceive<JsonResponsePacketDeserializer.LogoutResponse>(null, (uint)JsonRequestPacketSerializer.reqCodes.LEAVEGAME_REQ_CODE);
+                this.client.SendAndReceive<JsonResponsePacketDeserializer.LogoutResponse>(null, (uint)JsonRequestPacketSerializer.reqCodes.LOGOUT_REQ_CODE);
             }
         }
     }

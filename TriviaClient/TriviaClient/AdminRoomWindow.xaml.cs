@@ -22,11 +22,13 @@ namespace TriviaClient
     {
         private Client client;
         private DispatcherTimer dt;
+        private bool isForcedClosing;
 
         public AdminRoomWindow(Client client, string roomName)
         {
             InitializeComponent();
             this.client = new Client(client);
+            this.isForcedClosing = true;
             this.RoomName.Text = roomName;
             //   Thread t = new Thread();
             //    t.Start(roomName);
@@ -81,6 +83,7 @@ namespace TriviaClient
                 JsonResponsePacketDeserializer.CloseRoomResponse closeRoomResp = this.client.SendAndReceive<JsonResponsePacketDeserializer.CloseRoomResponse>(null, (uint)JsonRequestPacketSerializer.reqCodes.CLOSEROOM_REQ_CODE);
                 if (closeRoomResp.status == 1)
                 {
+                    this.isForcedClosing = false;
                     this.dt.Stop();
                     MenuWindow mw = new MenuWindow(this.client);
                     this.Close();
@@ -105,6 +108,7 @@ namespace TriviaClient
                 JsonResponsePacketDeserializer.StartGameResponse startGameResp = this.client.SendAndReceive<JsonResponsePacketDeserializer.StartGameResponse>(null, (uint)JsonRequestPacketSerializer.reqCodes.STARTGAME_REQ_CODE);
                 if (startGameResp.status == 1)
                 {
+                    this.isForcedClosing = false;
                     this.dt.Stop();
                     GameWindow gw = new GameWindow(this.client, Int32.Parse(this.QuestionsTime.Text.Substring("Timeout: ".Length)));
                     this.Close();
@@ -119,6 +123,15 @@ namespace TriviaClient
             catch (Exception exception)
             {
 
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if(this.isForcedClosing)
+            {
+                this.client.SendAndReceive<JsonResponsePacketDeserializer.LogoutResponse>(null, (uint)JsonRequestPacketSerializer.reqCodes.CLOSEROOM_REQ_CODE);
+                this.client.SendAndReceive<JsonResponsePacketDeserializer.LogoutResponse>(null, (uint)JsonRequestPacketSerializer.reqCodes.LOGOUT_REQ_CODE);
             }
         }
     }

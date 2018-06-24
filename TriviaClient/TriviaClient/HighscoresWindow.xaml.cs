@@ -20,11 +20,13 @@ namespace TriviaClient
     public partial class HighscoresWindow : Window
     {
         private Client client;
+        private bool isForcedClosing;
 
         public HighscoresWindow(Client client)
         {
             InitializeComponent();
             this.client = new Client(client);
+            this.isForcedClosing = true;
             ShowHighscores();
         }
 
@@ -82,9 +84,18 @@ namespace TriviaClient
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
+            this.isForcedClosing = false;
             MenuWindow mw = new MenuWindow(this.client);
             this.Close();
             mw.Show();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if(this.isForcedClosing)
+            {
+                this.client.SendAndReceive<JsonResponsePacketDeserializer.LogoutResponse>(null, (uint)JsonRequestPacketSerializer.reqCodes.LOGOUT_REQ_CODE);
+            }
         }
     }
 }
