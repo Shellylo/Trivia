@@ -61,7 +61,8 @@ namespace TriviaClient
                                 this.gscore4.Text = (highscore.score).ToString();
                                 this.gdate4.Text = highscore.time;
                                 break;
-                            case 4:                               this.username5.Text = highscore.username;
+                            case 4:
+                                this.username5.Text = highscore.username;
                                 this.gscore5.Text = (highscore.score).ToString();
                                 this.gdate5.Text = highscore.time;
                                 break;

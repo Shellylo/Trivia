@@ -48,6 +48,7 @@ RequestResult RoomAdminRequestHandler::startGame(Request req)
 	try
 	{
 		grh = m_handlerFactory.createGameRequestHandler(m_gameManager.createGame(m_user, m_room), m_user);
+		m_roomManager.leaveRoom(m_user, m_room.getRoomData().id);
 	}
 	catch (...)
 	{

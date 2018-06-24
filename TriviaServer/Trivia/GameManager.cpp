@@ -4,8 +4,9 @@ GameManager::GameManager(IDatabase & database) : m_database(database)
 {
 }
 
-Game & GameManager::createGame(LoggedUser user, Room room)
+Game & GameManager::createGame(LoggedUser user, Room& room)
 {
+	room.setState(STARTED);
 	time_t now = time(0);
 	tm* localtm = localtime(&now);
 	int id = m_database.createGame(asctime(localtm));

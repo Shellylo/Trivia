@@ -66,6 +66,7 @@ RequestResult RoomMemberRequestHandler::joinGame(Request req)
 	try
 	{
 		grh = m_handlerFactory.createGameRequestHandler(m_gameManager.joinGame(m_user, m_room.getRoomData().id), m_user);
+		m_roomManager.leaveRoom(m_user, m_room.getRoomData().id);
 	}
 	catch (...)
 	{
