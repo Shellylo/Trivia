@@ -69,7 +69,7 @@ std::vector<char> JsonResponsePacketSerializer::serializeResponse(LeaveRoomRespo
 std::vector<char> JsonResponsePacketSerializer::serializeResponse(JoinGameResponse resp)
 {
 	json j = { { "status", resp.status } };
-	return createBuff(j, JOINROOM_RESP_CODE);
+	return createBuff(j, JOINGAME_RESP_CODE);
 }
 
 std::vector<char> JsonResponsePacketSerializer::serializeResponse(GetQuestionResponse resp)

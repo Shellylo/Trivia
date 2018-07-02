@@ -20,15 +20,18 @@ namespace TriviaClient
     public partial class MenuWindow : Window
     {
         private Client client;
+        private bool isForcedClosing;
 
         public MenuWindow(Client client)
         {
             InitializeComponent();
             this.client = new Client(client);
+            this.isForcedClosing = true;
         }
 
         private void JoinRoom_Click(object sender, RoutedEventArgs e)
         {
+            this.isForcedClosing = false;
             JoinRoomWindow jrw = new JoinRoomWindow(this.client);
             this.Close();
             jrw.Show();
@@ -36,6 +39,7 @@ namespace TriviaClient
 
         private void CreateRoom_Click(object sender, RoutedEventArgs e)
         {
+            this.isForcedClosing = false;
             CreateRoomWindow crw = new CreateRoomWindow(this.client);
             this.Close();
             crw.Show();
@@ -43,6 +47,7 @@ namespace TriviaClient
 
         private void Highscores_Click(object sender, RoutedEventArgs e)
         {
+            this.isForcedClosing = false;
             HighscoresWindow hw = new HighscoresWindow(this.client);
             this.Close();
             hw.Show();
@@ -55,6 +60,7 @@ namespace TriviaClient
                 JsonResponsePacketDeserializer.LogoutResponse logoutResp = this.client.SendAndReceive<JsonResponsePacketDeserializer.LogoutResponse>(null, (uint)JsonRequestPacketSerializer.reqCodes.LOGOUT_REQ_CODE);
                 if (logoutResp.status == 1)
                 {
+                    this.isForcedClosing = false;
                     MainWindow mw = new MainWindow(this.client);
                     this.Close();
                     mw.Show();
@@ -67,6 +73,14 @@ namespace TriviaClient
             catch (Exception exception)
             {
 
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if(this.isForcedClosing)
+            {
+                this.client.SendAndReceive<JsonResponsePacketDeserializer.LogoutResponse>(null, (uint)JsonRequestPacketSerializer.reqCodes.LOGOUT_REQ_CODE);
             }
         }
     }

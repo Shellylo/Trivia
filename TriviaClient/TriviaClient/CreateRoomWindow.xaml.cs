@@ -21,11 +21,13 @@ namespace TriviaClient
     {
         public Client client;
         public bool[] variables;
+        private bool isForcedClosing;
 
         public CreateRoomWindow(Client client)
         {
             InitializeComponent();
             this.client = new Client(client);
+            this.isForcedClosing = true;
             variables = new bool[4];
             for(int i = 0; i < variables.Length; i++)
             {
@@ -35,6 +37,7 @@ namespace TriviaClient
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
+            this.isForcedClosing = false;
             MenuWindow mw = new MenuWindow(this.client);
             this.Close();
             mw.Show();
@@ -55,6 +58,7 @@ namespace TriviaClient
                     JsonResponsePacketDeserializer.CreateRoomResponse createRoomResp = this.client.SendAndReceive<JsonResponsePacketDeserializer.CreateRoomResponse>(createRoomReq, (uint)JsonRequestPacketSerializer.reqCodes.CREATEROOM_REQ_CODE);
                     if (createRoomResp.status == 1)
                     {
+                        this.isForcedClosing = false;
                         AdminRoomWindow arw = new AdminRoomWindow(this.client, this.NameBox.Text);
                         this.Close();
                         arw.Show();
@@ -126,6 +130,14 @@ namespace TriviaClient
             else
             {
                 this.QuestionTimeError.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if(this.isForcedClosing)
+            {
+                this.client.SendAndReceive<JsonResponsePacketDeserializer.LogoutResponse>(null, (uint)JsonRequestPacketSerializer.reqCodes.LOGOUT_REQ_CODE);
             }
         }
     }

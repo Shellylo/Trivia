@@ -24,11 +24,13 @@ namespace TriviaClient
         private List<string> answers;
         private DispatcherTimer dt;
         private int time;
+        private bool isForcedClosing;
 
         public GameWindow(Client client, int time)
         {
             InitializeComponent();
             this.client = new Client(client);
+            this.isForcedClosing = true;
             JsonResponsePacketDeserializer.GetQuestionResponse questionResp = getQuestion();
             this.answers = questionResp.answers;
             updateScreen(questionResp.question);
@@ -97,6 +99,7 @@ namespace TriviaClient
                 JsonResponsePacketDeserializer.LeaveGameResponse leaveGameResp = this.client.SendAndReceive<JsonResponsePacketDeserializer.LeaveGameResponse>(null, (uint)JsonRequestPacketSerializer.reqCodes.LEAVEGAME_REQ_CODE);
                 if (leaveGameResp.status == 1)
                 {
+                    this.isForcedClosing = false;
                     dt.Stop();
                     MenuWindow mw = new MenuWindow(this.client);
                     this.Close();
@@ -135,6 +138,7 @@ namespace TriviaClient
                 {
                     if (submitAnswerResp.hasFinished)
                     {
+                        this.isForcedClosing = false;
                         dt.Stop();
                         ResultsWindow rw = new ResultsWindow(this.client);
                         this.Close();
@@ -152,6 +156,15 @@ namespace TriviaClient
             catch (Exception exception)
             {
 
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (this.isForcedClosing)
+            {
+                this.client.SendAndReceive<JsonResponsePacketDeserializer.LogoutResponse>(null, (uint)JsonRequestPacketSerializer.reqCodes.LEAVEGAME_REQ_CODE);
+                this.client.SendAndReceive<JsonResponsePacketDeserializer.LogoutResponse>(null, (uint)JsonRequestPacketSerializer.reqCodes.LOGOUT_REQ_CODE);
             }
         }
     }

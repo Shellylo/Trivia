@@ -21,12 +21,14 @@ namespace TriviaClient
     {
         public Client client;
         public List<JsonResponsePacketDeserializer.RoomData> rooms;
+        private bool isForcedClosing;
 
         public JoinRoomWindow(Client client)
         {
             InitializeComponent();
             this.client = new Client(client);
             rooms = new List<JsonResponsePacketDeserializer.RoomData>();
+            this.isForcedClosing = true;
             // get rooms from server
             UpdateRoomsToList();
             UpdateListBox();
@@ -94,6 +96,7 @@ namespace TriviaClient
                     JsonResponsePacketDeserializer.JoinRoomResponse joinRoomResp = this.client.SendAndReceive<JsonResponsePacketDeserializer.JoinRoomResponse>(joinRoomReq, (uint)JsonRequestPacketSerializer.reqCodes.JOINROOM_REQ_CODE);
                     if (joinRoomResp.status == 1)
                     {
+                        this.isForcedClosing = false;
                         MemberRoomWindow mrw = new MemberRoomWindow(this.client, this.rooms[this.RoomsList.SelectedIndex].name);
                         this.Close();
                         mrw.Show();
@@ -118,6 +121,7 @@ namespace TriviaClient
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
+            this.isForcedClosing = false;
             MenuWindow mw = new MenuWindow(this.client);
             this.Close();
             mw.Show();
@@ -156,6 +160,14 @@ namespace TriviaClient
             else
             {
                 this.SelectRoomError.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if(this.isForcedClosing)
+            {
+                this.client.SendAndReceive<JsonResponsePacketDeserializer.LogoutResponse>(null, (uint)JsonRequestPacketSerializer.reqCodes.LOGOUT_REQ_CODE);
             }
         }
     }

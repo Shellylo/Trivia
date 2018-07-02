@@ -14,7 +14,7 @@ public:
 	*/
 	GameManager(IDatabase& database);
 
-	Game& createGame(LoggedUser user, Room room);
+	Game& createGame(LoggedUser user, Room& room);
 	Game& joinGame(LoggedUser user, int roomId);
 	void deleteGame(Game& game);
 	std::string submitAnswer(LoggedUser user, Game& game, std::string answer);
